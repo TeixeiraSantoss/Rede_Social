@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Back.Data;
+using Back.DTO.UsuarioDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Back.Controllers
 {
@@ -22,11 +24,29 @@ namespace Back.Controllers
         //Inicio Cadastrar
 
         [HttpPost("cadastrar")]
-        public IActionResult Cadastrar([FromBody] UsuarioModel usuario)
+        public IActionResult Cadastrar([FromBody] UsuarioCreateDTO usuario)
         {
             try
             {
-                return Ok();
+                UsuarioModel? usuarioExistente = _ctx.Usuarios.FirstOrDefault(u => u.id == usuario.id);
+
+                if (usuarioExistente != null)
+                {
+                    return BadRequest("Usuario já cadastrado " + usuarioExistente);
+                }
+
+                UsuarioModel novoUsuario = new UsuarioModel
+                {
+                    nome = usuario.nome,
+                    userName = usuario.userName,
+                    email = usuario.email,
+                    senha = usuario.senha
+                };
+
+                _ctx.Usuarios.Add(novoUsuario);
+                _ctx.SaveChanges();
+
+                return Ok("Usuario cadastrado com sucesso " + novoUsuario);
             }
             catch (System.Exception e)
             {
@@ -45,7 +65,8 @@ namespace Back.Controllers
         {
             try
             {
-                return Ok();
+                List<UsuarioModel> usuarios = _ctx.Usuarios.ToList();
+                return Ok(usuarios);
             }
             catch (System.Exception e)
             {
