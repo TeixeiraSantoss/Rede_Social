@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Back.Data;
+using Back.DTO.SeguidorDTO;
 using Back.DTO.UsuarioDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -66,7 +67,23 @@ namespace Back.Controllers
             try
             {
                 List<UsuarioModel> usuarios = _ctx.Usuarios.ToList();
-                return Ok(usuarios);
+
+                List<UsuarioReadDTO> usuariosEnv = usuarios.Select(u => new UsuarioReadDTO
+                {
+                    id = u.id,
+                    nome = u.nome,
+                    userName = u.userName,
+                    Postagens = u.Postagens,
+                    Seguindo = u.Seguindo,
+                    Seguidores = u.Seguidores
+                }).ToList();
+
+                if (usuariosEnv == null)
+                {
+                    return BadRequest("Nenhum usuario encontrado");
+                }
+
+                return Ok(usuariosEnv);
             }
             catch (System.Exception e)
             {
@@ -81,11 +98,24 @@ namespace Back.Controllers
         //Inicio Editar
 
         [HttpPatch("editar/{id}")]
-        public IActionResult Editar([FromBody] UsuarioModel usuario, [FromRoute] int id)
+        public IActionResult Editar([FromBody] UsuarioEditDTO usuario, [FromRoute] int id)
         {
             try
             {
-                return Ok();
+                UsuarioModel? usuarioExstente = _ctx.Usuarios.Find(id);
+
+                if (usuarioExstente == null)
+                {
+                    return BadRequest("Nenhum usuario encontrado");
+                }
+
+                usuarioExstente.nome = usuario.nome;
+                usuarioExstente.userName = usuario.userName;
+
+                _ctx.Usuarios.Update(usuarioExstente);
+                _ctx.SaveChanges();
+
+                return Ok("Informações editadas com sucesso");
             }
             catch (System.Exception e)
             {
@@ -104,6 +134,16 @@ namespace Back.Controllers
         {
             try
             {
+                UsuarioModel? usuarioExistente = _ctx.Usuarios.Find(id);
+
+                if (usuarioExistente == null)
+                {
+                    return BadRequest("Nenhumusuario encontrado");
+                }
+
+                _ctx.Usuarios.Remove(usuarioExistente);
+                _ctx.SaveChanges();
+
                 return Ok();
             }
             catch (System.Exception e)
@@ -119,7 +159,7 @@ namespace Back.Controllers
         //Inicio Listar quem está sendo Seguido
 
         [HttpGet("listarSeguidos")]
-        public IActionResult ListarSeguidos()
+        public IActionResult ListarSeguidos([FromRoute] int id)
         {
             try
             {
