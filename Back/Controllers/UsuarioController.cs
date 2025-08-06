@@ -28,7 +28,7 @@ namespace Back.Controllers
         {
             try
             {
-                UsuarioModel? usuarioExistente = _ctx.Usuarios.FirstOrDefault(u => u.id == usuario.id);
+                UsuarioModel? usuarioExistente = _ctx.Usuarios.FirstOrDefault(u => u.userName == usuario.userName);
 
                 if (usuarioExistente != null)
                 {
