@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Back.Data;
+using Back.DTO.PostagemDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,16 +24,10 @@ namespace Back.Controllers
         //Inicio Cadastrar
 
         [HttpPost("cadastrar")]
-        public IActionResult Cadastrar([FromBody] PostagemModel postagem)
+        public IActionResult Cadastrar([FromBody] PostagemCreateDTO postagem)
         {
             try
             {
-                PostagemModel? postagemExistente = _ctx.Postagens.FirstOrDefault(p => p.id == postagem.id);
-
-                if (postagemExistente != null)
-                {
-                    return BadRequest("Postagem já cadastrada");
-                }
 
                 PostagemModel novaPostagem = new PostagemModel
                 {
@@ -65,12 +60,20 @@ namespace Back.Controllers
             {
                 List<PostagemModel> postagens = _ctx.Postagens.Include(p => p.Usuario).ToList();
 
-                if (postagens == null)
+                List<PostagemReadDTO> postagensEnv = postagens.Select(p => new PostagemReadDTO
+                {
+                    titulo = p.titulo,
+                    conteudo = p.conteudo,
+                    UsuarioId = p.UsuarioId
+                }).ToList();
+
+                if (postagensEnv == null)
                 {
                     return BadRequest("Nenhuma postagem encontrada");
                 }
 
-                return Ok(postagens);
+                return Ok(postagensEnv);
+                
             }
             catch (System.Exception e)
             {
@@ -85,7 +88,7 @@ namespace Back.Controllers
         //Inicio Editar
 
         [HttpPatch("editar/{id}")]
-        public IActionResult Editar([FromBody] PostagemModel postagem, [FromRoute] int id)
+        public IActionResult Editar([FromBody] PostagemEditDTO postagem, [FromRoute] int id)
         {
             try
             {
