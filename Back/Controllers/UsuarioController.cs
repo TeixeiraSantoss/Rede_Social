@@ -158,12 +158,24 @@ namespace Back.Controllers
         //
         //Inicio Listar quem está sendo Seguido
 
-        [HttpGet("listarSeguidos")]
-        public IActionResult ListarSeguidos([FromRoute] int id)
+        [HttpGet("listarSeguidos/{userId}")]
+        public IActionResult ListarSeguidos([FromRoute] int userId)
         {
             try
             {
-                return Ok();
+                List<UsuarioSeguidoDTO> seguidos = _ctx.Seguidores
+                    .Where(s => s.seguidorId == userId)
+                    .Include(s => s.Seguido)
+                    .Select(s => new UsuarioSeguidoDTO
+                    {
+                        id = s.Seguido.id,
+                        nome = s.Seguido.nome,
+                        userName = s.Seguido.userName
+                    })
+                    .ToList();
+
+                return Ok(seguidos);
+
             }
             catch (System.Exception e)
             {
@@ -177,12 +189,24 @@ namespace Back.Controllers
         //
         //Inicio Listar quem está Seguindo
 
-        [HttpGet("listarSeguindo")]
-        public IActionResult ListarSeguindo()
+        [HttpGet("listarSeguidores/{userId}")]
+        public IActionResult ListarSeguidores([FromRoute] int userId)
         {
             try
             {
-                return Ok();
+                List<UsuarioSeguidorDTO> seguidores = _ctx.Seguidores
+                .Where(s => s.seguidoId == userId)
+                .Include(s => s.Seguidor)
+                .Select(s => new UsuarioSeguidorDTO
+                {
+                    id = s.Seguidor.id,
+                    nome = s.Seguidor.nome,
+                    userName = s.Seguidor.userName
+                })
+                .ToList();
+
+                return Ok(seguidores);
+
             }
             catch (System.Exception e)
             {
