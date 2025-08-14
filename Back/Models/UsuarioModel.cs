@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Back.Models
 {
     public class UsuarioModel
-    {
+    { 
         public int id { get; set; }
         public string nome { get; set; }
         public string userName { get; set; }
