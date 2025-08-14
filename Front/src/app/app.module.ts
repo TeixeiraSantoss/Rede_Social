@@ -8,6 +8,8 @@ import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cad
 import { ListarUsuarioComponent } from './Pages/Usuario/listar-usuario/listar-usuario.component';
 import { CadastrarPostagemComponent } from './Pages/Postagem/cadastrar-postagem/cadastrar-postagem.component';
 import { ListarPostagemComponent } from './Pages/Postagem/listar-postagem/listar-postagem.component';
+import { EditarPostagemComponent } from './Pages/Postagem/editar-postagem/editar-postagem.component';
+import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ListarPostagemComponent } from './Pages/Postagem/listar-postagem/listar
     CadastrarUsuarioComponent,
     ListarUsuarioComponent,
     CadastrarPostagemComponent,
-    ListarPostagemComponent
+    ListarPostagemComponent,
+    EditarPostagemComponent,
+    EditarUsuarioComponent
   ],
   imports: [
     BrowserModule,
