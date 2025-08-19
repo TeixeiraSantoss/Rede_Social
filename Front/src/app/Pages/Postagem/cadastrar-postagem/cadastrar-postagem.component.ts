@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { PostagemCreatDTO } from 'src/app/DTO/PostagemDTO/PostagemCreatDTO';
+import { PostagemCreatDTO } from 'src/app/DTO/PostagemDTO/PostagemCreateDTO';
 
 @Component({
   selector: 'app-cadastrar-postagem',
