@@ -216,5 +216,23 @@ namespace Back.Controllers
 
         //Fim Listar quem está Seguindo
         //
+
+        //
+        //Inicio Login
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]UsuarioLoginDTO loginInfo)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Login
+        //
     }
 }

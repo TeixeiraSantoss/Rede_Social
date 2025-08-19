@@ -1,1 +1,15 @@
-<p>cadastrar-postagem works!</p>
+<form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Titulo</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="titulo" name="titulo">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Conteudo</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="conteudo" name="conteudo">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">UsuarioId</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="UsuarioId" name="UsuarioId">
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="cadastrar()">Submit</button>
+</form>

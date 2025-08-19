@@ -1,1 +1,18 @@
-<p>listar-postagem works!</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Titulo</th>
+      <th scope="col">Conteudo</th>
+      <th scope="col">UsuarioId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of postagens">
+      <th>{{p.id}}</th>
+      <td>{{p.titulo}}</td>
+      <td>{{p.conteudo}}</td>
+      <td>{{p.usuarioId}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -62,6 +62,7 @@ namespace Back.Controllers
 
                 List<PostagemReadDTO> postagensEnv = postagens.Select(p => new PostagemReadDTO
                 {
+                    id = p.id,
                     titulo = p.titulo,
                     conteudo = p.conteudo,
                     UsuarioId = p.UsuarioId
