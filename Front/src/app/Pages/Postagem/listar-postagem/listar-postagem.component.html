@@ -5,6 +5,7 @@
       <th scope="col">Titulo</th>
       <th scope="col">Conteudo</th>
       <th scope="col">UsuarioId</th>
+      <th scope="col">Editar</th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
       <td>{{p.titulo}}</td>
       <td>{{p.conteudo}}</td>
       <td>{{p.usuarioId}}</td>
+      <button (click)="Editar(p.id)">editar</button>
     </tr>
   </tbody>
 </table>

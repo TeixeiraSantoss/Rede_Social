@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
 
 @Component({
@@ -8,7 +9,7 @@ import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
   styleUrls: ['./listar-postagem.component.scss']
 })
 export class ListarPostagemComponent {
-  constructor(private client: HttpClient){}
+  constructor(private client: HttpClient, private route: Router){}
 
   postagens: PostagemReadDTO[] = []
 
@@ -23,5 +24,10 @@ export class ListarPostagemComponent {
         console.log(erro)
       }
     })
+  }
+
+  Editar(id: number): void{
+    console.log(id)
+    this.route.navigate([`postagem/editar/${id}`])
   }
 }

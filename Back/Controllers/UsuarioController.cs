@@ -220,7 +220,7 @@ namespace Back.Controllers
         //
         //Inicio Login
         [HttpPost("login")]
-        public IActionResult Login([FromBody]UsuarioLoginDTO loginInfo)
+        public IActionResult Login([FromBody] UsuarioLoginDTO loginInfo)
         {
             try
             {
@@ -233,6 +233,24 @@ namespace Back.Controllers
         }
 
         //Fim Login
+        //
+
+        //
+        //Inicio Buscar
+        [HttpGet("buscar/{id}")]
+        public IActionResult Buscar([FromRoute] int id)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Buscar
         //
     }
 }

@@ -74,7 +74,7 @@ namespace Back.Controllers
                 }
 
                 return Ok(postagensEnv);
-                
+
             }
             catch (System.Exception e)
             {
@@ -144,6 +144,40 @@ namespace Back.Controllers
         }
 
         //Fim Excluir
+        //
+
+        //
+        //Inicio Buscar,
+        [HttpGet("buscar/{id}")]
+        public IActionResult Buscar([FromRoute] int id)
+        {
+            try
+            {
+                PostagemModel? postagemExistente = _ctx.Postagens.Find(id);
+
+                if (postagemExistente == null)
+                {
+                    return NotFound("Nenhuma postagem encontrada");
+                }
+
+                PostagemReadDTO? postagemEncontrada = new PostagemReadDTO
+                {
+                    id = postagemExistente.id,
+                    titulo = postagemExistente.titulo,
+                    conteudo = postagemExistente.conteudo,
+                    UsuarioId = postagemExistente.UsuarioId
+
+                };
+
+                return Ok(postagemEncontrada);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Buscar
         //
 
     }
