@@ -1,1 +1,20 @@
-<p>listar-usuario works!</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nome</th>
+      <th scope="col">UserName</th>
+      <th scope="col">Editar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of usuarios">
+      <th>{{u.id}}</th>
+      <td>{{u.nome}}</td>
+      <td>{{u.userName}}</td>
+      <td>
+        <button (click)="editar(u.id)">editar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

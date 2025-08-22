@@ -10,10 +10,14 @@ import { EditarPostagemComponent } from './Pages/Postagem/editar-postagem/editar
 import { ListarPostagemComponent } from './Pages/Postagem/listar-postagem/listar-postagem.component';
 import { CadastrarPostagemComponent } from './Pages/Postagem/cadastrar-postagem/cadastrar-postagem.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cadastrar-usuario.component';
+import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CadastrarUsuarioComponent,
+    EditarUsuarioComponent,
     ListarUsuarioComponent,
     EditarPostagemComponent,
     ListarPostagemComponent,

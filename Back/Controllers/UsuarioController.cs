@@ -242,7 +242,24 @@ namespace Back.Controllers
         {
             try
             {
-                return Ok();
+                UsuarioModel? usuarioExistente = _ctx.Usuarios.Find(id);
+
+                if (usuarioExistente == null)
+                {
+                    return NotFound("Nenhum usuario encontrado");
+                }
+
+                UsuarioReadDTO? usuarioEncontrado = new UsuarioReadDTO
+                {
+                    id = usuarioExistente.id,
+                    nome = usuarioExistente.nome,
+                    userName = usuarioExistente.userName,
+                    Postagens = usuarioExistente.Postagens,
+                    Seguidores = usuarioExistente.Seguidores,
+                    Seguindo = usuarioExistente.Seguindo
+                };
+
+                return Ok(usuarioEncontrado);
             }
             catch (System.Exception e)
             {
