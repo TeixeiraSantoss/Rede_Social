@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Back.Data;
-using Back.DTO.SeguidorDTO;
 using Back.DTO.UsuarioDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Back.Controllers
 {
@@ -95,6 +93,41 @@ namespace Back.Controllers
         //
 
         //
+        //Inicio Buscar
+        [HttpGet("buscar/{id}")]
+        public IActionResult Buscar([FromRoute] int id)
+        {
+            try
+            {
+                UsuarioModel? usuarioExistente = _ctx.Usuarios.Find(id);
+
+                if (usuarioExistente == null)
+                {
+                    return NotFound("Nenhum usuario encontrado");
+                }
+
+                UsuarioReadDTO? usuarioEncontrado = new UsuarioReadDTO
+                {
+                    id = usuarioExistente.id,
+                    nome = usuarioExistente.nome,
+                    userName = usuarioExistente.userName,
+                    Postagens = usuarioExistente.Postagens,
+                    Seguidores = usuarioExistente.Seguidores,
+                    Seguindo = usuarioExistente.Seguindo
+                };
+
+                return Ok(usuarioEncontrado);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Buscar
+        //
+
+        //
         //Inicio Editar
 
         [HttpPatch("editar/{id}")]
@@ -156,68 +189,6 @@ namespace Back.Controllers
         //
 
         //
-        //Inicio Listar quem está sendo Seguido
-
-        [HttpGet("listarSeguidos/{id}")]
-        public IActionResult ListarSeguidos([FromRoute] int id)
-        {
-            try
-            {
-                List<UsuarioSeguidoDTO> seguidos = _ctx.Seguidores
-                    .Where(s => s.seguidorId == id)
-                    .Include(s => s.Seguido)
-                    .Select(s => new UsuarioSeguidoDTO
-                    {
-                        id = s.Seguido.id,
-                        nome = s.Seguido.nome,
-                        userName = s.Seguido.userName
-                    })
-                    .ToList();
-
-                return Ok(seguidos);
-
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-
-        //Fim Listar quem está sendo Seguido
-        //
-
-        //
-        //Inicio Listar quem está Seguindo
-
-        [HttpGet("listarSeguidores/{id}")]
-        public IActionResult ListarSeguidores([FromRoute] int id)
-        {
-            try
-            {
-                List<UsuarioSeguidorDTO> seguidores = _ctx.Seguidores
-                .Where(s => s.seguidoId == id)
-                .Include(s => s.Seguidor)
-                .Select(s => new UsuarioSeguidorDTO
-                {
-                    id = s.Seguidor.id,
-                    nome = s.Seguidor.nome,
-                    userName = s.Seguidor.userName
-                })
-                .ToList();
-
-                return Ok(seguidores);
-
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-
-        //Fim Listar quem está Seguindo
-        //
-
-        //
         //Inicio Login
         [HttpPost("login")]
         public IActionResult Login([FromBody] UsuarioLoginDTO loginInfo)
@@ -235,39 +206,5 @@ namespace Back.Controllers
         //Fim Login
         //
 
-        //
-        //Inicio Buscar
-        [HttpGet("buscar/{id}")]
-        public IActionResult Buscar([FromRoute] int id)
-        {
-            try
-            {
-                UsuarioModel? usuarioExistente = _ctx.Usuarios.Find(id);
-
-                if (usuarioExistente == null)
-                {
-                    return NotFound("Nenhum usuario encontrado");
-                }
-
-                UsuarioReadDTO? usuarioEncontrado = new UsuarioReadDTO
-                {
-                    id = usuarioExistente.id,
-                    nome = usuarioExistente.nome,
-                    userName = usuarioExistente.userName,
-                    Postagens = usuarioExistente.Postagens,
-                    Seguidores = usuarioExistente.Seguidores,
-                    Seguindo = usuarioExistente.Seguindo
-                };
-
-                return Ok(usuarioEncontrado);
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-
-        //Fim Buscar
-        //
     }
 }
