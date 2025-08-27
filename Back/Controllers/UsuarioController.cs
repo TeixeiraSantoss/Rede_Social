@@ -158,13 +158,13 @@ namespace Back.Controllers
         //
         //Inicio Listar quem está sendo Seguido
 
-        [HttpGet("listarSeguidos/{userId}")]
-        public IActionResult ListarSeguidos([FromRoute] int userId)
+        [HttpGet("listarSeguidos/{id}")]
+        public IActionResult ListarSeguidos([FromRoute] int id)
         {
             try
             {
                 List<UsuarioSeguidoDTO> seguidos = _ctx.Seguidores
-                    .Where(s => s.seguidorId == userId)
+                    .Where(s => s.seguidorId == id)
                     .Include(s => s.Seguido)
                     .Select(s => new UsuarioSeguidoDTO
                     {
@@ -189,13 +189,13 @@ namespace Back.Controllers
         //
         //Inicio Listar quem está Seguindo
 
-        [HttpGet("listarSeguidores/{userId}")]
-        public IActionResult ListarSeguidores([FromRoute] int userId)
+        [HttpGet("listarSeguidores/{id}")]
+        public IActionResult ListarSeguidores([FromRoute] int id)
         {
             try
             {
                 List<UsuarioSeguidorDTO> seguidores = _ctx.Seguidores
-                .Where(s => s.seguidoId == userId)
+                .Where(s => s.seguidoId == id)
                 .Include(s => s.Seguidor)
                 .Select(s => new UsuarioSeguidorDTO
                 {
