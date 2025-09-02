@@ -34,7 +34,7 @@ export class ListarSeguidoresComponent {
     })
 
     //Recebe a Lista de usuarios que estão seguindo outros usuarios
-    this.client.get<UsuarioSeguidorDTO[]>(`https://localhost:7088/api/usuario/listarSeguidores/${this.id}`)
+    this.client.get<UsuarioSeguidorDTO[]>(`https://localhost:7088/api/seguidor/listarSeguidores/${this.id}`)
     .subscribe({
       next:(seguidores) =>{
         this.seguidores = seguidores
@@ -47,7 +47,7 @@ export class ListarSeguidoresComponent {
     });
 
     //Recebe a lista de usuarios que estão SENDO seguidos
-    this.client.get<UsuarioSeguidoDTO[]>(`https://localhost:7088/api/usuario/listarSeguidos/${this.id}`)
+    this.client.get<UsuarioSeguidoDTO[]>(`https://localhost:7088/api/seguidor/listarSeguidos/${this.id}`)
     .subscribe({
       next:(seguidos) =>{
         this.seguidos = seguidos

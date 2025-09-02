@@ -20,7 +20,7 @@ namespace Back.Controllers
         {
             _ctx = ctx;
         }
-        
+
         //
         //Inicio Listar Seguidores
 
@@ -38,7 +38,7 @@ namespace Back.Controllers
                     userNameSeguido = s.Seguido.userName,
                     seguidorId = s.seguidorId,
                     nomeSeguidor = s.Seguidor.nome,
-                    userNameSeguidor = s.Seguidor.userName                 
+                    userNameSeguidor = s.Seguidor.userName
                 }).ToList();
 
                 if (seguidoresEnv == null)
@@ -128,7 +128,7 @@ namespace Back.Controllers
 
                 if (registroExistente != null)
                 {
-                    return BadRequest("Registro ja existente");    
+                    return BadRequest("Registro ja existente");
                 }
 
                 SeguidorModel? novoRegistro = new SeguidorModel
@@ -149,6 +149,35 @@ namespace Back.Controllers
         }
 
         //Fim SeguirUsuario
+        //
+
+        //
+        //Inicio Deixar de seguir Usuario
+
+        [HttpDelete("DeixarSeguir")]
+        public IActionResult DeixarSeguir([FromBody] SeguidorCreatDTO seguirInfo)
+        {
+            try
+            {
+                SeguidorModel? registroExistente = _ctx.Seguidores.FirstOrDefault(s => s.seguidoId == seguirInfo.seguidoId && s.seguidorId == seguirInfo.seguidorId);
+
+                if (registroExistente == null)
+                {
+                    return NotFound("Registro não encontrado");
+                }
+
+                _ctx.Seguidores.Remove(registroExistente);
+                _ctx.SaveChanges();
+
+                return Ok("Usuario: " + seguirInfo.seguidorId + " Deixou de seguir o usuario: " + seguirInfo.seguidoId);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Deixar de seguir usuario
         //
 
     }
