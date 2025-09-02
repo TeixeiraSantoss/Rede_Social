@@ -12,7 +12,7 @@ import { CadastrarPostagemComponent } from './Pages/Postagem/cadastrar-postagem/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cadastrar-usuario.component';
 import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
-import { ListarSeguidoresComponent } from './Pages/Usuario/listar-seguidores/listar-seguidores.component';
+import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
 
 @NgModule({
   declarations: [

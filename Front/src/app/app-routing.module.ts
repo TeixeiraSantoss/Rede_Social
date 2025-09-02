@@ -6,7 +6,7 @@ import { CadastrarPostagemComponent } from './Pages/Postagem/cadastrar-postagem/
 import { ListarUsuarioComponent } from './Pages/Usuario/listar-usuario/listar-usuario.component';
 import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cadastrar-usuario.component';
 import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
-import { ListarSeguidoresComponent } from './Pages/Usuario/listar-seguidores/listar-seguidores.component';
+import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     component: EditarUsuarioComponent
   },
   {
-    path:"usuario/listarSeguidores/:id",
+    path:"seguidores/listarSeguidores/:id",
     component: ListarSeguidoresComponent
   }
 ];

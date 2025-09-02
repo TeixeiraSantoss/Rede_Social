@@ -124,6 +124,11 @@ namespace Back.Controllers
         {
             try
             {
+                if (seguirInfos.seguidoId == seguirInfos.seguidorId)
+                {
+                    return BadRequest("O usuario não pode seguir a si mesmo");
+                }
+                
                 SeguidorModel? registroExistente = _ctx.Seguidores.FirstOrDefault(s => s.seguidoId == seguirInfos.seguidoId && s.seguidorId == seguirInfos.seguidorId);
 
                 if (registroExistente != null)

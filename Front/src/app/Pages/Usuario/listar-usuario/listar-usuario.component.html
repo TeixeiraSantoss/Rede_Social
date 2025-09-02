@@ -4,7 +4,10 @@
       <th scope="col">Id</th>
       <th scope="col">Nome</th>
       <th scope="col">UserName</th>
+      <th scope="col">Seguir</th>
+      <th scope="col">Deixar de Seguir</th>
       <th scope="col">Editar</th>
+      <th scope="col">Seguidores/Seguindo</th>
     </tr>
   </thead>
   <tbody>
@@ -13,7 +16,16 @@
       <td>{{u.nome}}</td>
       <td>{{u.userName}}</td>
       <td>
+        <button (click)="seguirUsuario(u.id)">seguir</button>
+      </td>
+      <td>
+        <button (click)="deixarSeguir(u.id)">Deixar de seguir</button>
+      </td>
+      <td>
         <button (click)="editar(u.id)">editar</button>
+      </td>
+      <td>
+        <button (click)="listaSeguidores(u.id)">lista</button>
       </td>
     </tr>
   </tbody>

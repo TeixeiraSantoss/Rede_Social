@@ -11,8 +11,8 @@
                         Usuario
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" [routerLink]="['usuario/listar']">Listar</a></li>
-                    <li><a class="dropdown-item" [routerLink]="['usuario/cadastrar']">Cadastrar</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['usuario/listar']">Listar</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['usuario/cadastrar']">Cadastrar</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -20,8 +20,16 @@
                         Postagem
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" [routerLink]="['postagem/listar']">Listar</a></li>
-                    <li><a class="dropdown-item" [routerLink]="['postagem/cadastrar']">Cadastrar</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['postagem/listar']">Listar</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['postagem/cadastrar']">Cadastrar</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Seguidores
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" [routerLink]="['seguidores/listarSeguidores/:id']">Listar</a></li>
                     </ul>
                 </li>
             </ul>
