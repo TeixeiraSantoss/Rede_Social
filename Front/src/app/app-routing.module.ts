@@ -7,8 +7,13 @@ import { ListarUsuarioComponent } from './Pages/Usuario/listar-usuario/listar-us
 import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cadastrar-usuario.component';
 import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
 import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
+import { LoginComponent } from './Pages/Usuario/login/login.component';
 
 const routes: Routes = [
+  {
+    path: "",
+    component: LoginComponent
+  },
   {
     path: "postagem/listar",
     component: ListarPostagemComponent

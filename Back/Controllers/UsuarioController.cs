@@ -106,11 +106,13 @@ namespace Back.Controllers
                     return NotFound("Nenhum usuario encontrado");
                 }
 
-                UsuarioReadDTO? usuarioEncontrado = new UsuarioReadDTO
+                UsuarioFindDTO? usuarioEncontrado = new UsuarioFindDTO
                 {
                     id = usuarioExistente.id,
                     nome = usuarioExistente.nome,
                     userName = usuarioExistente.userName,
+                    email = usuarioExistente.email,
+                    senha = usuarioExistente.senha,
                     Postagens = usuarioExistente.Postagens,
                     Seguidores = usuarioExistente.Seguidores,
                     Seguindo = usuarioExistente.Seguindo
@@ -195,7 +197,19 @@ namespace Back.Controllers
         {
             try
             {
-                return Ok();
+                UsuarioModel? usuarioExistente = _ctx.Usuarios.FirstOrDefault(u => u.email == loginInfo.email);
+
+                if (usuarioExistente == null)
+                {
+                    return NotFound("Nenhum usurio encontrado");
+                }
+
+                if (usuarioExistente.senha == loginInfo.senha)
+                {
+                    return Ok("Login realizado com sucesso");
+                }
+
+                return Unauthorized("dados de login incorretos");
             }
             catch (System.Exception e)
             {

@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cadastrar-usuario.component';
 import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
 import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
+import { LoginComponent } from './Pages/Usuario/login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/
     EditarPostagemComponent,
     ListarPostagemComponent,
     CadastrarPostagemComponent,
-    ListarSeguidoresComponent
+    ListarSeguidoresComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
