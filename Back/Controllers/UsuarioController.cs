@@ -199,14 +199,21 @@ namespace Back.Controllers
             {
                 UsuarioModel? usuarioExistente = _ctx.Usuarios.FirstOrDefault(u => u.email == loginInfo.email);
 
-                if (usuarioExistente == null)
+                UsuarioLoginDTO? dadosUsusario = new UsuarioLoginDTO
+                {
+                    id = usuarioExistente.id,
+                    email = usuarioExistente.email,
+                    senha = usuarioExistente.senha
+                };
+
+                if (dadosUsusario == null)
                 {
                     return NotFound("Nenhum usurio encontrado");
                 }
 
-                if (usuarioExistente.senha == loginInfo.senha)
+                if (dadosUsusario.senha == loginInfo.senha)
                 {
-                    return Ok("Login realizado com sucesso");
+                    return Ok(dadosUsusario);
                 }
 
                 return Unauthorized("dados de login incorretos");

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UsuarioReadDTO } from '../DTO/UsuarioDTO/UsuarioReadDTO';
+import { UsuarioLoginDTO } from '../DTO/UsuarioDTO/UsuarioLoginDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AuthService {
   //Metodo Login
   //Vai armazenar no SessionStorage o objeto usuario que realizar o login na aplicação
 
-  login(usuario: UsuarioReadDTO): void{
+  login(usuario: UsuarioLoginDTO): void{
+    
     if(usuario != null){
       sessionStorage.setItem('usuario', JSON.stringify(usuario))
     }

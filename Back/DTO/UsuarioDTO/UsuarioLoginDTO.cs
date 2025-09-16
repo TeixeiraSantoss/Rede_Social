@@ -7,6 +7,7 @@ namespace Back.DTO.UsuarioDTO
 {
     public class UsuarioLoginDTO
     {
+        public int id { get; set; }
         public string email { get; set; }
         public string senha { get; set; }
     }
