@@ -36,7 +36,7 @@ export class LoginComponent {
         //verificando se os dados foram salvos corretamente no sessionStorage
         console.log(this.auth.getUsuario())
 
-        this.router.navigate(['feed'])
+        // this.router.navigate(['feed'])
       },
       error:(erro) =>{
         console.log(erro)

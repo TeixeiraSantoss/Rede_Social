@@ -1,22 +1,45 @@
+import { UsuarioReadDTO } from './../DTO/UsuarioDTO/UsuarioReadDTO';
 import { Injectable } from '@angular/core';
-import { UsuarioReadDTO } from '../DTO/UsuarioDTO/UsuarioReadDTO';
 import { UsuarioLoginDTO } from '../DTO/UsuarioDTO/UsuarioLoginDTO';
+import { HttpClient } from '@angular/common/http';
+import { PostagemReadDTO } from '../DTO/PostagemDTO/PostagemReadDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private client: HttpClient) { }
 
   //Metodo Login
   //Vai armazenar no SessionStorage o objeto usuario que realizar o login na aplicação
 
   login(usuario: UsuarioLoginDTO): void{
-    
+
+    let usuarioSalvar: UsuarioReadDTO
+
+    this.client.get<UsuarioReadDTO>(`https://localhost:7088/api/usuario/buscar/${usuario.id}`)
+    .subscribe({
+      next:(dadosUsuario) => {
+        usuarioSalvar = {
+          id: dadosUsuario.id,
+          nome: dadosUsuario.nome,
+          userName: dadosUsuario.userName,
+          Seguidores: dadosUsuario.Seguidores,
+          Seguindo: dadosUsuario.Seguindo,
+          Postagens: dadosUsuario.Postagens
+        }
+      },
+      error:(erro) => {
+        console.log(erro)
+      }
+    })
+
     if(usuario != null){
       sessionStorage.setItem('usuario', JSON.stringify(usuario))
     }
+
+    this.carregarDados(usuario.id)
   }
 
   //Metodo GetUsuario
@@ -43,5 +66,28 @@ export class AuthService {
   //Vai limpar os dados armazenados no SessionStorage
   logout(): void{
     sessionStorage.removeItem('usuario')
+  }
+
+  //Metodo carregarDados
+  //Esse metodo vai carregar os dados do usuario que fez login
+  //vai ser carregado:
+  //Seguidores
+  //Seguidos
+  //Postagens
+  carregarDados(id: number): void{
+    //Caregar lista de postagens
+    let postagens: PostagemReadDTO[] = []
+    
+
+    this.client.get<PostagemReadDTO[]>("https://localhost:7088/api/postagem/listar")
+    .subscribe({
+      next:(postagensApi) => {
+        postagens = postagensApi.filter(p => p.usuarioId == id)
+      },
+      error:(erro) => {
+        console.log(erro)
+      }
+    })
+
   }
 }

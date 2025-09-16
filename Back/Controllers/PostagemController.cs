@@ -147,7 +147,7 @@ namespace Back.Controllers
         //
 
         //
-        //Inicio Buscar,
+        //Inicio Buscar po id da postagem
         [HttpGet("buscar/{id}")]
         public IActionResult Buscar([FromRoute] int id)
         {
@@ -170,6 +170,41 @@ namespace Back.Controllers
                 };
 
                 return Ok(postagemEncontrada);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Buscar
+        //
+
+        //
+        //Buscar por id do usuario
+        [HttpGet("buscarIdUser/{userId}")]
+        public IActionResult BuscarIdUser([FromRoute] int userId)
+        {
+            try
+            {
+                List<PostagemModel>? postagemExistente = _ctx.Postagens.ToList();
+
+                List<PostagemReadDTO>? postagensEnv = postagemExistente
+                .Where(p => p.UsuarioId == userId)
+                .Select(p => new PostagemReadDTO
+                    {
+                        id = p.id,
+                        conteudo = p.conteudo,
+                        titulo = p.titulo,
+                        UsuarioId = p.UsuarioId
+                    }).ToList();
+
+                if (postagemExistente == null)
+                {
+                    return NotFound("Nenhuma postagem encontrada");
+                }
+
+                return Ok(postagensEnv);
             }
             catch (System.Exception e)
             {

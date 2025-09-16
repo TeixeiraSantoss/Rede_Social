@@ -6,6 +6,7 @@ using Back.Data;
 using Back.DTO.UsuarioDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Back.Controllers
 {
