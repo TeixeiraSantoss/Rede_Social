@@ -1,7 +1,9 @@
+import { PostagemReadDTO } from './../../../DTO/PostagemDTO/PostagemReadDTO';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
+import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
+import { UsuarioModel } from 'src/app/Models/UsuarioModel';
 
 @Component({
   selector: 'app-listar-postagem',
@@ -12,6 +14,7 @@ export class ListarPostagemComponent {
   constructor(private client: HttpClient, private route: Router){}
 
   postagens: PostagemReadDTO[] = []
+  usuario: UsuarioModel | undefined
 
   ngOnInit(): void{
     this.client.get<PostagemReadDTO[]>("https://localhost:7088/api/postagem/listar")

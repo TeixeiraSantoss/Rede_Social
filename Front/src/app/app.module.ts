@@ -14,6 +14,8 @@ import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cad
 import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
 import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
 import { LoginComponent } from './Pages/Usuario/login/login.component';
+import { FeedPageComponent } from './Pages/UI/Feed/feed-page/feed-page.component';
+import { PerfilPageComponent } from './Pages/UI/Perfil/perfil-page/perfil-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { LoginComponent } from './Pages/Usuario/login/login.component';
     ListarPostagemComponent,
     CadastrarPostagemComponent,
     ListarSeguidoresComponent,
-    LoginComponent
+    LoginComponent,
+    FeedPageComponent,
+    PerfilPageComponent
   ],
   imports: [
     BrowserModule,

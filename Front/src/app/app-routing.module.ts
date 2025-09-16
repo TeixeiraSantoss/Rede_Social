@@ -8,6 +8,7 @@ import { CadastrarUsuarioComponent } from './Pages/Usuario/cadastrar-usuario/cad
 import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-usuario.component';
 import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
 import { LoginComponent } from './Pages/Usuario/login/login.component';
+import { FeedPageComponent } from './Pages/UI/Feed/feed-page/feed-page.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path:"seguidores/listarSeguidores/:id",
     component: ListarSeguidoresComponent
+  },
+  {
+    path:"feed",
+    component: FeedPageComponent
   }
 ];
 
