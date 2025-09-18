@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Back.DTO.PostagemDTO;
+using Back.DTO.SeguidorDTO;
 using Back.Models;
 
 namespace Back.DTO.UsuarioDTO
@@ -13,8 +15,8 @@ namespace Back.DTO.UsuarioDTO
         public string userName { get; set; }
         public string email { get; set; }
         public string senha { get; set; }
-        public List<PostagemModel> Postagens { get; set; } = new();
-        public List<SeguidorModel> Seguindo { get; set; } = new();
-        public List<SeguidorModel> Seguidores { get; set; } = new();
+        public List<PostagemReadDTO> Postagens { get; set; } = new();
+        public List<UsuarioSeguidoDTO> Seguindo { get; set; } = new();
+        public List<UsuarioSeguidorDTO> Seguidores { get; set; } = new();
     }
 }

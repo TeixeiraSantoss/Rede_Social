@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { UsuarioLoginDTO } from '../DTO/UsuarioDTO/UsuarioLoginDTO';
 import { HttpClient } from '@angular/common/http';
 import { PostagemReadDTO } from '../DTO/PostagemDTO/PostagemReadDTO';
+import { UsuarioSeguidorDTO } from '../DTO/SeguidorDTO/UsuarioSeguidorDTO';
+import { UsuarioSeguidoDTO } from '../DTO/SeguidorDTO/UsuarioSeguidoDTO';
+import { SeguidorModel } from '../Models/SeguidorModel';
+import { PostagemModel } from '../Models/PostagemModel';
 
 @Injectable({
   providedIn: 'root'
@@ -18,28 +22,36 @@ export class AuthService {
 
     let usuarioSalvar: UsuarioReadDTO
 
+    sessionStorage.setItem('usuario', JSON.stringify(usuario))
+
     this.client.get<UsuarioReadDTO>(`https://localhost:7088/api/usuario/buscar/${usuario.id}`)
     .subscribe({
       next:(dadosUsuario) => {
-        usuarioSalvar = {
-          id: dadosUsuario.id,
-          nome: dadosUsuario.nome,
-          userName: dadosUsuario.userName,
-          Seguidores: dadosUsuario.Seguidores,
-          Seguindo: dadosUsuario.Seguindo,
-          Postagens: dadosUsuario.Postagens
+
+        //usuarioCarregado contem os dados de Seguidores, Seguidos e Postagens do usuario que realizou o login
+        let usuarioCarregado = this.carregarDados(usuario.id);
+
+        //o if é necessario pois o usuarioCarregado possui o tipo NULL
+        if(usuarioCarregado){  
+          usuarioSalvar = {
+            id: dadosUsuario.id,
+            nome: dadosUsuario.nome,
+            userName: dadosUsuario.userName,
+            Seguidores: usuarioCarregado.Seguidores,
+            Seguindo: usuarioCarregado.Seguindo,
+            Postagens: usuarioCarregado.Postagens
+          }
         }
+
+        sessionStorage.removeItem('usuario')
+        sessionStorage.setItem('usuario', JSON.stringify(usuarioSalvar))
+
+        console.log("Dados do usuario Logado: ", usuarioSalvar)
       },
       error:(erro) => {
         console.log(erro)
       }
     })
-
-    if(usuario != null){
-      sessionStorage.setItem('usuario', JSON.stringify(usuario))
-    }
-
-    this.carregarDados(usuario.id)
   }
 
   //Metodo GetUsuario
@@ -74,20 +86,72 @@ export class AuthService {
   //Seguidores
   //Seguidos
   //Postagens
-  carregarDados(id: number): void{
+  carregarDados(userId: number): UsuarioReadDTO | null{
     //Caregar lista de postagens
-    let postagens: PostagemReadDTO[] = []
-    
+    let postagens: PostagemModel[] = []
 
-    this.client.get<PostagemReadDTO[]>("https://localhost:7088/api/postagem/listar")
+    this.client.get<PostagemReadDTO[]>(`https://localhost:7088/api/postagem/buscarIdUser/${userId}`)
     .subscribe({
       next:(postagensApi) => {
-        postagens = postagensApi.filter(p => p.usuarioId == id)
+
+        postagens = postagensApi.map(p => ({
+          id: p.id,
+          conteudo: p.conteudo,
+          titulo: p.titulo,
+          UsuarioId: p.usuarioId
+        }))
+
       },
       error:(erro) => {
         console.log(erro)
       }
     })
 
+    //Carregar lista de Seguidores e Seguidos
+    let seguidores: SeguidorModel[] = []
+    let seguidos: SeguidorModel[] = []
+
+    this.client.get<UsuarioSeguidorDTO[]>(`https://localhost:7088/api/seguidor/listarSeguidores/${userId}`)
+    .subscribe({
+      next:(rSeguidores) => {
+        seguidores = rSeguidores.map(s => ({
+          seguidoId: userId,
+          seguidorId: s.id
+        }))
+      },
+      error:(erro) => {
+        console.log(erro)
+      }
+    })
+    
+    this.client.get<UsuarioSeguidoDTO[]>(`https://localhost:7088/api/seguidor/listarSeguidos/${userId}`)
+    .subscribe({
+      next:(rSeguidos) => {
+        seguidos = rSeguidos.map(s => ({
+          seguidoId: s.id,
+          seguidorId: userId
+        }))
+      },
+      error:(erro) => {
+        console.log(erro)
+      }
+    })
+
+    console.log("Seguidores ", seguidores)
+    console.log("seguidos", seguidos)
+    console.log("Postagens", postagens)
+
+    let usuarioLogado = this.getUsuario();
+
+    if(usuarioLogado != null){
+      console.log("entrou no if")
+      usuarioLogado.Seguidores = seguidores
+      usuarioLogado.Seguindo = seguidos
+      usuarioLogado.Postagens = postagens
+    }    
+
+    console.log("usuario logado: ", usuarioLogado)
+
+    return usuarioLogado;
   }
 }

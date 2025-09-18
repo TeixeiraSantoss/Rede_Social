@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Back.Data;
+using Back.DTO.PostagemDTO;
+using Back.DTO.SeguidorDTO;
 using Back.DTO.UsuarioDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -102,6 +104,42 @@ namespace Back.Controllers
             {
                 UsuarioModel? usuarioExistente = _ctx.Usuarios.Find(id);
 
+                //Lista de seguidores
+                List<UsuarioSeguidorDTO> seguidores = _ctx.Seguidores
+                .Where(s => s.seguidoId == id)
+                .Include(s => s.Seguidor)
+                .Select(s => new UsuarioSeguidorDTO
+                {
+                    id = s.Seguidor.id,
+                    nome = s.Seguidor.nome,
+                    userName = s.Seguidor.userName
+                })
+                .ToList();
+
+                //Lista de seguidos
+                List<UsuarioSeguidoDTO> seguidos = _ctx.Seguidores
+                    .Where(s => s.seguidorId == id)
+                    .Include(s => s.Seguido)
+                    .Select(s => new UsuarioSeguidoDTO
+                    {
+                        id = s.Seguido.id,
+                        nome = s.Seguido.nome,
+                        userName = s.Seguido.userName
+                    })
+                    .ToList();
+
+                //Lista de postagens
+                List<PostagemReadDTO>? postagens = _ctx.Postagens
+                .Where(p => p.UsuarioId == id)
+                .Select(p => new PostagemReadDTO
+                {
+                    id = p.id,
+                    titulo = p.titulo,
+                    conteudo = p.conteudo,
+                    UsuarioId = p.UsuarioId
+                })
+                .ToList();
+
                 if (usuarioExistente == null)
                 {
                     return NotFound("Nenhum usuario encontrado");
@@ -114,9 +152,9 @@ namespace Back.Controllers
                     userName = usuarioExistente.userName,
                     email = usuarioExistente.email,
                     senha = usuarioExistente.senha,
-                    Postagens = usuarioExistente.Postagens,
-                    Seguidores = usuarioExistente.Seguidores,
-                    Seguindo = usuarioExistente.Seguindo
+                    Postagens = postagens,
+                    Seguidores = seguidores,
+                    Seguindo = seguidos
                 };
 
                 return Ok(usuarioEncontrado);
