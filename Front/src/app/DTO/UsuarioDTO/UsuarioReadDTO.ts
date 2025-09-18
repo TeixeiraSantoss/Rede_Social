@@ -6,7 +6,7 @@ export interface UsuarioReadDTO
     id: number;
     nome: string;
     userName: string;
-    Postagens: PostagemModel[];
-    Seguindo: SeguidorModel[];
-    Seguidores: SeguidorModel[];
+    postagens: PostagemModel[];
+    seguindo: SeguidorModel[];
+    seguidores: SeguidorModel[];
 }
