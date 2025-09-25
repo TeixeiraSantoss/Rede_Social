@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostagemCreatDTO } from 'src/app/DTO/PostagemDTO/PostagemCreateDTO';
+import { AuthService } from 'src/app/Service/auth.service';
 
 @Component({
   selector: 'app-cadastrar-postagem',
@@ -8,7 +10,7 @@ import { PostagemCreatDTO } from 'src/app/DTO/PostagemDTO/PostagemCreateDTO';
   styleUrls: ['./cadastrar-postagem.component.scss']
 })
 export class CadastrarPostagemComponent {
-  constructor(private client: HttpClient){}
+  constructor(private client: HttpClient, private auth: AuthService, private router: Router){}
 
   titulo: string = ""
   conteudo: string = ""
@@ -21,19 +23,30 @@ export class CadastrarPostagemComponent {
   }
 
   cadastrar(): void{
-    let novaPostagem: PostagemCreatDTO = {
-      titulo: this.titulo,
-      conteudo: this.conteudo,
-      UsuarioId: this.UsuarioId
-    }
-    this.client.post<PostagemCreatDTO>("https://localhost:7088/api/postagem/cadastrar", novaPostagem)
-    .subscribe({
-      next: () =>{
-        console.log("Postagem cadastrao com sucesso")
-      },
-      error: (erro) =>{
-        console.log(erro)
+
+    let dadosUsuario = this.auth.getUsuario()
+
+    if(dadosUsuario?.id != undefined){
+      let novaPostagem: PostagemCreatDTO = {
+        titulo: this.titulo,
+        conteudo: this.conteudo,
+        UsuarioId: dadosUsuario?.id
       }
-    })
-  }
+
+      this.client.post<PostagemCreatDTO>("https://localhost:7088/api/postagem/cadastrar", novaPostagem)
+      .subscribe({
+        next: () =>{
+          console.log("Postagem cadastrao com sucesso")
+        },
+        error: (erro) =>{
+          console.log(erro)
+        }
+      })
+      
+      this.router.navigate(["/feed"]);
+    }
+    
+
+  }      
+
 }
