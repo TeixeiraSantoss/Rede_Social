@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
 import { UsuarioModel } from 'src/app/Models/UsuarioModel';
+import { AuthService } from 'src/app/Service/auth.service';
 
 @Component({
   selector: 'app-listar-postagem',
@@ -11,13 +12,15 @@ import { UsuarioModel } from 'src/app/Models/UsuarioModel';
   styleUrls: ['./listar-postagem.component.scss']
 })
 export class ListarPostagemComponent {
-  constructor(private client: HttpClient, private route: Router){}
+  constructor(private client: HttpClient, private route: Router, private auth: AuthService){}
 
   postagens: PostagemReadDTO[] = []
-  usuario: UsuarioModel | undefined
+  usuario: UsuarioReadDTO | null = null
 
   ngOnInit(): void{
-    this.client.get<PostagemReadDTO[]>("https://localhost:7088/api/postagem/listar")
+    this.usuario = this.auth.getUsuario()
+
+    this.client.get<PostagemReadDTO[]>(`https://localhost:7088/api/postagem/buscarIdUser/${this.usuario?.id}`)
     .subscribe({
       next:(postagens) => {
         this.postagens = postagens

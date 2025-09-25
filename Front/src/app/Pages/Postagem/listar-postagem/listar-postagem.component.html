@@ -1,22 +1,17 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Titulo</th>
-      <th scope="col">Conteudo</th>
-      <th scope="col">UsuarioId</th>
-      <th scope="col">Editar</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of postagens">
-      <th>{{p.id}}</th>
-      <td>{{p.titulo}}</td>
-      <td>{{p.conteudo}}</td>
-      <td>{{p.usuarioId}}</td>
-      <td>
-        <button (click)="Editar(p.id)">editar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div *ngFor="let p of postagens">
+  <!-- topo com o userName do usuario logado -->
+  <div id="userName">
+    <p>@{{usuario?.userName}}</p>
+  </div>
+  <!-- seção de conteudo -->
+  <div id="boxConteudo">    
+      <div id="titulo">
+        <p>{{p.titulo}}</p>
+      </div>
+    
+      <div id="conteudo">
+        <p>{{p.conteudo}}</p>
+      </div>
+  </div>
+  <hr>
+</div>
