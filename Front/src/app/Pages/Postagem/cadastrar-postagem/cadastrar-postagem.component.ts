@@ -36,7 +36,7 @@ export class CadastrarPostagemComponent {
       this.client.post<PostagemCreatDTO>("https://localhost:7088/api/postagem/cadastrar", novaPostagem)
       .subscribe({
         next: () =>{
-          console.log("Postagem cadastrao com sucesso")
+          console.log("Postagem cadastrada com sucesso")
         },
         error: (erro) =>{
           console.log(erro)

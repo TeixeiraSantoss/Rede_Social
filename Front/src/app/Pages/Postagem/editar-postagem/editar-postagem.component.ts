@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { PostagemEditDTO } from 'src/app/DTO/PostagemDTO/PostagemEditDTO';
 import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
 
@@ -10,7 +10,7 @@ import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
   styleUrls: ['./editar-postagem.component.scss']
 })
 export class EditarPostagemComponent {
-  constructor(private client: HttpClient, private router: ActivatedRoute){}
+  constructor(private client: HttpClient, private router: ActivatedRoute, private route: Router){}
    
   //Receber o id da postagem ao clicar nela
   id: number = 0

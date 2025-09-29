@@ -16,6 +16,7 @@ import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/
 import { LoginComponent } from './Pages/Usuario/login/login.component';
 import { FeedPageComponent } from './Pages/UI/Feed/feed-page/feed-page.component';
 import { PerfilPageComponent } from './Pages/UI/Perfil/perfil-page/perfil-page.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PerfilPageComponent } from './Pages/UI/Perfil/perfil-page/perfil-page.c
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

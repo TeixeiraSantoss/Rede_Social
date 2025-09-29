@@ -1,1 +1,11 @@
-<p>perfil-page works!</p>
+<div id="caixa">
+    <div id="userInfo">
+        <h1>Olá <strong>{{usuario?.nome}}</strong> seja bem vindo(a) a sua página de perfil :]</h1>
+        <p>{{usuario?.nome}}</p>
+        <p>@{{usuario?.userName}}</p>
+    </div>
+    <div id="postagens">
+        <h1>Postagens</h1>
+        <app-listar-postagem></app-listar-postagem>
+    </div>
+</div>

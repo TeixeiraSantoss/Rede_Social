@@ -36,4 +36,16 @@ export class ListarPostagemComponent {
     console.log(id)
     this.route.navigate([`postagem/editar/${id}`])
   }
+
+  Excluir(id: number): void{
+    this.client.delete(`https://localhost:7088/api/postagem/excluir/${id}`)
+    .subscribe({
+      next:() =>{
+        console.log("postagem excluida")
+      },
+      error:(erro) =>{
+        console.log(erro)
+      }
+    })
+  }
 }

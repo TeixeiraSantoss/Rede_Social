@@ -9,6 +9,7 @@ import { EditarUsuarioComponent } from './Pages/Usuario/editar-usuario/editar-us
 import { ListarSeguidoresComponent } from './Pages/Seguidores/listar-seguidores/listar-seguidores.component';
 import { LoginComponent } from './Pages/Usuario/login/login.component';
 import { FeedPageComponent } from './Pages/UI/Feed/feed-page/feed-page.component';
+import { PerfilPageComponent } from './Pages/UI/Perfil/perfil-page/perfil-page.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path:"feed",
     component: FeedPageComponent
+  },
+  {
+    path:"perfil",
+    component: PerfilPageComponent
   }
 ];
 
