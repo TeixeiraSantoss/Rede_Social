@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Back.Data;
 using Back.DTO.PostagemDTO;
+using Back.DTO.UsuarioDTO;
 using Back.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +84,49 @@ namespace Back.Controllers
         }
 
         //Fim Listar
+        //
+
+        //
+        //Inicio Listar Postagem Seguidos
+
+        [HttpGet("listarPostagemSeguidos/{userId}")]
+        public IActionResult ListarPostagemSeguidos([FromRoute] int userId)
+        {
+            try
+            {
+
+                //Retorna apenas os Ids dos usuarios que estão sendo seguidos pelo usuario que está logado
+                var seguindoIds = _ctx.Seguidores
+                    .Where(s => s.seguidorId == userId)
+                    .Select(s => s.seguidoId)
+                    .ToList();
+
+                //Carrega uma lista com as postagens dos usuarios que estão sendo seguidos
+                List<PostagemReadDTO> postagens = _ctx.Postagens
+                    .Where(p => seguindoIds.Contains(p.UsuarioId))
+                    .Select(p => new PostagemReadDTO
+                    {
+                        id = p.id,
+                        titulo = p.titulo,
+                        conteudo = p.conteudo,
+                        UsuarioId = p.UsuarioId
+                    })
+                    .ToList();                
+
+                if (postagens == null)
+                {
+                    return NotFound("Nenhuma postagem foi encontrada");
+                }
+
+                return Ok(postagens);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        //Fim Listar Postagem Seguidos
         //
 
         //

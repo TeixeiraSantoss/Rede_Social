@@ -1,0 +1,45 @@
+#userName{
+    padding-top: 10px;
+}
+
+#userName>p{
+    margin: 0px;
+}
+
+#boxConteudo{
+    display: flex;
+    flex-direction: column;
+
+}
+
+#titulo{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: large;
+    letter-spacing: 1px;
+}
+
+#conteudo{
+    font-family: 'Open Sans', sans-serif;
+}
+
+#btns{
+    align-self:flex-end;
+}
+
+#btnEditar{
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+}
+
+#btnEditar:hover{
+    color: green;
+}
+
+#btnExcluir{
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+}
+
+#btnExcluir:hover{
+    color: red;
+}
