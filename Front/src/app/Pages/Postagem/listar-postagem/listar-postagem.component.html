@@ -9,18 +9,22 @@
         <p>{{p.titulo}}</p>
       </div>
     
-      <div id="conteudo">
-        <p>{{p.conteudo}}</p>
+      <div id="boxFunction">
+
+        <div id="conteudo">
+          <p>{{p.conteudo}}</p>
+        </div>
+        <div id="btns">
+          <button id="btnEditar" mat-icon-button color="primary" (click)="Editar(p.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button id="btnExcluir" mat-icon-button color="warn" (click)="Excluir(p.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        
       </div>
 
-      <div id="btns">
-        <button id="btnEditar" mat-icon-button color="primary" (click)="Editar(p.id)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button id="btnExcluir" mat-icon-button color="warn" (click)="Excluir(p.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
   </div>
   <hr>
 </div>

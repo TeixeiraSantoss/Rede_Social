@@ -12,6 +12,9 @@ import { AuthService } from 'src/app/Service/auth.service';
 export class LoginComponent {
   constructor(private client: HttpClient, private auth: AuthService, private router: Router){}
 
+  //condicional para o indicador de loading
+  isLoading: boolean = false
+
   id: number = 0 
   email: string = ""
   senha: string = ""
@@ -26,20 +29,24 @@ export class LoginComponent {
     this.client.post<UsuarioLoginDTO>("https://localhost:7088/api/usuario/login", loginInfo)
     .subscribe({
       next:(dados) =>{
-        console.log("Login realizado com sucesso ")
-
-        loginInfo.id = dados.id
+        //Dados ja foram enviados para o BackEnd e fluxo de dados já está ocorrendo
+        //"isLoading = true" pois aqui é o inicio da minha logica de login
+        this.isLoading = true
 
         //Enviando os dados do usuario para serem salvos no sessionStorage
-        this.auth.login(loginInfo)
+        //Execultando uma função callback para fazer a navegação
+        this.auth.login(dados, () =>{
+          //Fim do loading
+          this.isLoading = false
 
-        //verificando se os dados foram salvos corretamente no sessionStorage
-        console.log(this.auth.getUsuario())
+          this.router.navigate(['feed'])          
+        });     
 
-        this.router.navigate(['feed'])
       },
       error:(erro) =>{
         console.log(erro)
+        //Fim do loading
+        this.isLoading = false
       }
     })
 

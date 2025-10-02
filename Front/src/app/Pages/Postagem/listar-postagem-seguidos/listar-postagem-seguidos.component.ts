@@ -21,11 +21,15 @@ export class ListarPostagemSeguidosComponent {
     this.usuario = this.auth.getUsuario()
     console.log(this.usuario)
 
-    if(this.usuario != null){
-      for(let i = 0; i <= this.usuario?.seguindo.length - 1; i++){
-        console.log(this.usuario?.seguindo[i])
+    this.client.get<PostagemReadDTO[]>(`https://localhost:7088/api/postagem/listarPostagemSeguidos/${this.usuario?.id}`)
+    .subscribe({
+      next:(postagensReq) => {
+        this.postagens = postagensReq
+      },
+      error:(erro) => {
+        console.log(erro)
       }
-    }
+    })
     
   }
 

@@ -24,5 +24,9 @@ export class FeedPageComponent {
   irParaCadastrar():void{
     this.router.navigate(["postagem/cadastrar"]);
   }
+
+  navegarPerfilPage():void{
+    this.router.navigate(["perfil"])
+  }
   
 }

@@ -2,7 +2,9 @@
     <div id="divEsquerda">
         <div id="userInfo">
             <p>{{usuario?.nome}}</p>
-            <p>@{{usuario?.userName}}</p>
+            <button class="texto-clicavel" (click)="navegarPerfilPage()">
+                @{{usuario?.userName}}
+            </button>
         </div>
     </div>
     <div id="divCentro">
@@ -10,10 +12,10 @@
             <p>Barra de Pesquisa</p>
         </div>
         <div>
-            <app-listar-postagem></app-listar-postagem>
+            <app-listar-postagem-seguidos></app-listar-postagem-seguidos>
         </div>
     </div>
     <div id="divDireita">
-        <button (click)="irParaCadastrar()">Nova Publicação</button>
+        <button id="novaPubli" (click)="irParaCadastrar()">Nova Publicação</button>
     </div>
 </div>

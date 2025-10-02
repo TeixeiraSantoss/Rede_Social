@@ -18,7 +18,7 @@ export class AuthService {
   //Metodo Login
   //Vai armazenar no SessionStorage o objeto usuario que realizar o login na aplicação
 
-  login(usuario: UsuarioLoginDTO): void{
+  login(usuario: UsuarioLoginDTO, onSucess:() => void): void{
 
     let usuarioSalvar: UsuarioReadDTO
 
@@ -36,6 +36,11 @@ export class AuthService {
         }
 
         sessionStorage.setItem('usuario', JSON.stringify(usuarioSalvar))
+
+        //"onSucess" é uma função callback que nesse contexto está sendo usada
+        //para fazer a navegação para o "feed" apenas quando os dados do usuario
+        //estiverem salvos no sessioStorage
+        onSucess()
       },
       error:(erro) => {
         console.log(erro)

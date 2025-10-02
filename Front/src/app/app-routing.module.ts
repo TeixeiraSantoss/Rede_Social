@@ -54,7 +54,7 @@ const routes: Routes = [
     component: PerfilPageComponent
   },
   {
-    path:"postagem/listarSeguidos",
+    path:"postagem/listarSeguidos/:userId",
     component: ListarPostagemSeguidosComponent
   }
 ];
