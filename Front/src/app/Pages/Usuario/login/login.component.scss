@@ -12,3 +12,16 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+#boxLogin{
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    flex-direction: column;
+    margin-top: 100px;
+    padding: 20px;
+    height: 100%;
+    width: 300px;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+}
