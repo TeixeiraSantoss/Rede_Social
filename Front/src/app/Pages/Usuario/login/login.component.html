@@ -1,16 +1,23 @@
 <form>
-  <div id="boxLogin">
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Email</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email">
+  <div id="caixa">
+    <div id="boxLogin">
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Email</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Senha</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha">
+      </div>
+      <button id="btnEntrar" type="submit" class="btn btn-outline-success" (click)="login()" [disabled]="isLoading">
+        {{ isLoading ? "Entando..." : "Entrar" }}
+      </button>
     </div>
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Senha</label>
-      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha">
+    <div>
+      <button id="textoClicavel" (click)="irParaCadastrarUsuario()">
+        Cadastrar-se
+      </button>
     </div>
-    <button type="submit" class="btn btn-outline-success" (click)="login()" [disabled]="isLoading">
-      {{ isLoading ? "Entando..." : "Entrar" }}
-    </button>
+    <div *ngIf="isLoading" class="spinner"></div>
   </div>
-  <div *ngIf="isLoading" class="spinner"></div>
 </form>

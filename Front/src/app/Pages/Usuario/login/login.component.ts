@@ -51,4 +51,8 @@ export class LoginComponent {
     })
 
   }
+
+  irParaCadastrarUsuario(): void{
+    this.router.navigate(["usuario/cadastrar"])
+  }
 }

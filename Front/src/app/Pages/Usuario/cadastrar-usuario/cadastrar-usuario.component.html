@@ -1,19 +1,30 @@
 <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nome</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome">
+  <div id="boxUsuario">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">User Name</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Email</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Senha</label>
+      <div id="boxSenha">
+        <input id="senha" [type]="senhaVisivel ? 'text' : 'password'" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha">
+
+        <button id="toggleSenha" (click)="toggleSenha()">
+          <span class="material-icons">
+            <mat-icon>{{ senhaVisivel ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </span>
+        </button>
+
+      </div>
+    </div>
+    <button type="submit" class="btn btn-outline-success" (click)="cadastrar()">Cadastrar</button>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">User Name</label>
-    <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Email</label>
-    <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Senha</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha">
-  </div>
-  <button type="submit" class="btn btn-primary" (click)="cadastrar()">Submit</button>
 </form>
