@@ -1,23 +1,23 @@
-<form>
+<form (ngSubmit)="cadastrar()">
   <div id="boxUsuario">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome">
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome" autocomplete="off">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">User Name</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName">
+      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName" autocomplete="off">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Email</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email">
+      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email" autocomplete="off">
     </div>
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Senha</label>
       <div id="boxSenha">
-        <input id="senha" [type]="senhaVisivel ? 'text' : 'password'" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha">
+        <input id="senha" [type]="senhaVisivel ? 'text' : 'password'" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha" autocomplete="off">
 
-        <button id="toggleSenha" (click)="toggleSenha()">
+        <button type="button" id="toggleSenha" (click)="toggleSenha()">
           <span class="material-icons">
             <mat-icon>{{ senhaVisivel ? 'visibility_off' : 'visibility' }}</mat-icon>
           </span>
@@ -25,6 +25,6 @@
 
       </div>
     </div>
-    <button type="submit" class="btn btn-outline-success" (click)="cadastrar()">Cadastrar</button>
+    <button type="submit" class="btn btn-outline-success">Cadastrar</button>
   </div>
 </form>

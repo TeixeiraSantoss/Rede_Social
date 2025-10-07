@@ -1,11 +1,13 @@
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nome</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome">
+<form (ngSubmit)="editar()">
+  <div id="boxUsuario">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome" autocomplete="off">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">User Name</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName" autocomplete="off">
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
   </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">User Name</label>
-    <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName">
-  </div>
-  <button type="submit" class="btn btn-primary" (click)="editar()">Submit</button>
-</form>
+</form> 

@@ -7,6 +7,7 @@ import { UsuarioSeguidorDTO } from '../DTO/SeguidorDTO/UsuarioSeguidorDTO';
 import { UsuarioSeguidoDTO } from '../DTO/SeguidorDTO/UsuarioSeguidoDTO';
 import { SeguidorModel } from '../Models/SeguidorModel';
 import { PostagemModel } from '../Models/PostagemModel';
+import { UsuarioEditDTO } from '../DTO/UsuarioDTO/UsuarioEditDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,26 @@ export class AuthService {
       return JSON.parse(dados) as UsuarioReadDTO;
     }else{
       return null;
+    }
+  }
+
+  //Metodo setUsuario
+  //Vai alterar os dados do usuario caso haja alguma alteração
+  setUsuarioEditado(usuarioEditado: UsuarioEditDTO){
+    let usuarioLogado = this.getUsuario()
+
+    if(!usuarioLogado){
+      console.log("Nenhum usuario está logado no momento")
+      return
+    }
+
+    if((usuarioLogado?.nome != usuarioEditado.nome) || (usuarioLogado.userName != usuarioEditado.userName)){
+      usuarioLogado.nome = usuarioEditado.nome
+      usuarioLogado.userName = usuarioEditado.userName
+
+      console.log(usuarioLogado)
+
+      sessionStorage.setItem('usuario', JSON.stringify(usuarioLogado))
     }
   }
 

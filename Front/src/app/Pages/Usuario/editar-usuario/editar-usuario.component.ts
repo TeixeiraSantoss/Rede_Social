@@ -1,8 +1,9 @@
 import { UsuarioEditDTO } from './../../../DTO/UsuarioDTO/UsuarioEditDTO';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
+import { AuthService } from 'src/app/Service/auth.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -10,9 +11,9 @@ import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
   styleUrls: ['./editar-usuario.component.scss']
 })
 export class EditarUsuarioComponent {
-  constructor(private client: HttpClient, private router: ActivatedRoute){}
+  constructor(private client: HttpClient, private router: ActivatedRoute, private route: Router, private auth: AuthService){}
 
-  id: number = 0
+  id: number = 0 
   nome: string = ""
   userName: string = ""
 
@@ -42,20 +43,27 @@ export class EditarUsuarioComponent {
   }
 
   editar():void {
-
+    console.log("entrou no editar")
     let usuarioEditado: UsuarioEditDTO = {
       nome: this.nome,
       userName: this.userName
     }
+    console.log(this.id)
 
     this.client.patch<UsuarioEditDTO>(`https://localhost:7088/api/usuario/editar/${this.id}`, usuarioEditado)
     .subscribe({
       next: ()=>{
-        console.log("Usuario alterado com sucesso")
+        console.log("entrou no next")
+        this.auth.setUsuarioEditado(usuarioEditado)
+        
+        console.log("Usuario alterado com sucesso", this.auth.getUsuario())
+
+        this.route.navigate(["/perfil"])
       },
       error: (erro)=>{
         console.log(erro)
       }
-    })
+    })    
+    
   }
 }

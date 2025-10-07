@@ -1,14 +1,14 @@
-<form>
+<form (ngSubmit)="Editar()">
   <div id="caixa">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Titulo</label>
-      <input type="text" class="form-control" id="inputTitulo" aria-describedby="emailHelp" [(ngModel)]="titulo" name="titulo">
+      <input type="text" class="form-control" id="inputTitulo" aria-describedby="emailHelp" [(ngModel)]="titulo" name="titulo" autocomplete="off">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Conteudo</label>
       <br>
       <textarea id="inputConteudo" name="conteudo" [(ngModel)]="conteudo"></textarea>
     </div>
-    <button type="submit" class="btn btn-outline-success" (click)="Editar()">Concluir</button>
+    <button type="submit" class="btn btn-outline-success">Concluir</button>
   </div>
 </form>

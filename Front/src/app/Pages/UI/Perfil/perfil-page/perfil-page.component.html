@@ -14,19 +14,19 @@
 
         <!-- Menu que aparece ao clicar -->
         <mat-menu #menuOpcoes="matMenu">
-            <button mat-menu-item >
+            <button mat-menu-item (click)="irParaEditarUsuario()">
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
             </button>
 
-            <button mat-menu-item >
+            <button mat-menu-item (click)="excluir()">
                 <mat-icon>delete</mat-icon>
                 <span>Excluir</span>
             </button>
 
-            <button mat-menu-item >
-                <mat-icon>report</mat-icon>
-                <span>Denunciar</span>
+            <button mat-menu-item (click)="teste()">
+                <mat-icon>logout</mat-icon>
+                <span>Sair</span>
             </button>
         </mat-menu>
     </div>

@@ -15,6 +15,9 @@ export class LoginComponent {
   //condicional para o indicador de loading
   isLoading: boolean = false
 
+  //Variavel de controle de visibilidade da senha
+  senhaVisivel: boolean = false
+
   id: number = 0 
   email: string = ""
   senha: string = ""
@@ -54,5 +57,10 @@ export class LoginComponent {
 
   irParaCadastrarUsuario(): void{
     this.router.navigate(["usuario/cadastrar"])
+  }
+
+  toggleSenha(): void{
+    //Faz a troca de valor da variavel "senhaVisivel"
+    this.senhaVisivel = !this.senhaVisivel
   }
 }

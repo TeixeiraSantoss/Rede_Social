@@ -48,7 +48,7 @@ namespace Back.Controllers
                 _ctx.Usuarios.Add(novoUsuario);
                 _ctx.SaveChanges();
 
-                return Ok("Usuario cadastrado com sucesso " + novoUsuario);
+                return Ok(novoUsuario);
             }
             catch (System.Exception e)
             {
@@ -189,7 +189,8 @@ namespace Back.Controllers
                 _ctx.Usuarios.Update(usuarioExstente);
                 _ctx.SaveChanges();
 
-                return Ok("Informações editadas com sucesso");
+                //Retornando um objeto JSON manualmente para evitar erro de JSON.parse quando o objeto for recebido no Front
+                return Ok(usuarioExstente);
             }
             catch (System.Exception e)
             {
