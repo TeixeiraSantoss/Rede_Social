@@ -2,11 +2,38 @@
     <div id="userInfo">
         <h1>Olá <strong>{{usuario?.nome}}</strong> seja bem vindo(a) a página do ser perfil :]</h1>
         <br>
-        <p>{{usuario?.nome}}</p>
-        <p>@{{usuario?.userName}}</p>
+        <div id="caixaUser">
+            <p>{{usuario?.nome}}</p>
+            <p>@{{usuario?.userName}}</p>
+        </div>
+
+        <!-- Botão com os três pontinhos -->
+        <button id="moreVert" mat-icon-button [matMenuTriggerFor]="menuOpcoes">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <!-- Menu que aparece ao clicar -->
+        <mat-menu #menuOpcoes="matMenu">
+            <button mat-menu-item >
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+            </button>
+
+            <button mat-menu-item >
+                <mat-icon>delete</mat-icon>
+                <span>Excluir</span>
+            </button>
+
+            <button mat-menu-item >
+                <mat-icon>report</mat-icon>
+                <span>Denunciar</span>
+            </button>
+        </mat-menu>
     </div>
     <div id="postagens">
-        <h1>Postagens</h1>
+        <div id="divIcone">
+            <mat-icon id="iconeGrade">grid_view</mat-icon>
+        </div>
         <app-listar-postagem></app-listar-postagem>
     </div>
-</div>
+</div> 

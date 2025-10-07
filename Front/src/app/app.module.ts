@@ -17,6 +17,8 @@ import { LoginComponent } from './Pages/Usuario/login/login.component';
 import { FeedPageComponent } from './Pages/UI/Feed/feed-page/feed-page.component';
 import { PerfilPageComponent } from './Pages/UI/Perfil/perfil-page/perfil-page.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { ListarPostagemSeguidosComponent } from './Pages/Postagem/listar-postagem-seguidos/listar-postagem-seguidos.component';
 
 @NgModule({
@@ -40,7 +42,9 @@ import { ListarPostagemSeguidosComponent } from './Pages/Postagem/listar-postage
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
