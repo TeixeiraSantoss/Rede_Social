@@ -145,7 +145,7 @@ namespace Back.Controllers
                 _ctx.Seguidores.Add(novoRegistro);
                 _ctx.SaveChanges();
 
-                return Ok("Registro adicionado com sucesso");
+                return Ok(novoRegistro);
             }
             catch (System.Exception e)
             {
@@ -174,7 +174,7 @@ namespace Back.Controllers
                 _ctx.Seguidores.Remove(registroExistente);
                 _ctx.SaveChanges();
 
-                return Ok("Usuario: " + seguirInfo.seguidorId + " Deixou de seguir o usuario: " + seguirInfo.seguidoId);
+                return Ok(seguirInfo);
             }
             catch (System.Exception e)
             {

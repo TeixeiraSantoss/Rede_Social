@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
 import { AuthService } from 'src/app/Service/auth.service';
@@ -10,7 +11,7 @@ import { AuthService } from 'src/app/Service/auth.service';
   styleUrls: ['./listar-postagem-seguidos.component.scss']
 })
 export class ListarPostagemSeguidosComponent {
-  constructor(private client: HttpClient, private auth: AuthService){}
+  constructor(private client: HttpClient, private auth: AuthService, private route: Router){}
 
   usuario: UsuarioReadDTO | null = null
 
@@ -31,6 +32,10 @@ export class ListarPostagemSeguidosComponent {
       }
     })
     
+  }
+
+  irParaPerfil(id: number): void{
+    this.route.navigate(["perfil"])
   }
 
 

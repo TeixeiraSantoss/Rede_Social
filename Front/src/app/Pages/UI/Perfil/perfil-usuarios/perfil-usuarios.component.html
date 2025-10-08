@@ -1,0 +1,71 @@
+<div id="caixa">
+    <!-- Informações do perfil do usuario -->
+    <div id="userInfo">
+        <h1>Olá <strong>{{usuario?.nome}}</strong> seja bem vindo(a) a página do ser perfil :]</h1>
+        <br>
+        <div id="caixaUser">
+            <p>{{usuario?.nome}}</p>
+            <p>@{{usuario?.userName}}</p>
+        </div>
+
+        <!-- Botão com os três pontinhos -->
+        <button id="moreVert" mat-icon-button [matMenuTriggerFor]="menuOpcoes">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <!-- Menu que aparece ao clicar -->
+        <mat-menu #menuOpcoes="matMenu">
+            <button mat-menu-item (click)="irParaEditarUsuario()">
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+            </button>
+
+            <button mat-menu-item (click)="excluir()">
+                <mat-icon>delete</mat-icon>
+                <span>Excluir</span>
+            </button>
+
+            <button mat-menu-item (click)="teste()">
+                <mat-icon>logout</mat-icon>
+                <span>Sair</span>
+            </button>
+        </mat-menu>
+    </div>
+
+    <!-- Lista de postagens do usuario -->
+    <div id="postagens">
+        <div id="divIcone">
+            <mat-icon id="iconeGrade">grid_view</mat-icon>
+        </div>
+
+        <div id="postComponente">
+            <div *ngFor="let p of usuario?.postagens" id="postagem">
+                <!-- topo com o userName do usuario logado -->
+                <div id="userName">
+                    <p>@{{usuario?.userName}}</p>
+                </div>
+                <!-- seção de conteudo -->
+                <div id="boxConteudo">
+                    <div id="titulo">
+                        <p>{{p.titulo}}</p>
+                    </div>
+            
+                    <div id="boxFunction">
+                        <div id="conteudo">
+                            <p>{{p.conteudo}}</p>
+                        </div>
+                        <div id="btns">
+                            <button id="btnEditar" mat-icon-button color="primary" (click)="Editar(p.id)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button id="btnExcluir" mat-icon-button color="warn" (click)="Excluir(p.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div> 

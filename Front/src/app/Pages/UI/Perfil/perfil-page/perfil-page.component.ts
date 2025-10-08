@@ -24,7 +24,7 @@ export class PerfilPageComponent {
   }
 
   teste(): void{
-    this.router.navigate([""])
+    this.router.navigate([""]) 
   }
 
   excluir():void{

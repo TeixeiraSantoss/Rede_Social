@@ -11,6 +11,7 @@ import { LoginComponent } from './Pages/Usuario/login/login.component';
 import { FeedPageComponent } from './Pages/UI/Feed/feed-page/feed-page.component';
 import { PerfilPageComponent } from './Pages/UI/Perfil/perfil-page/perfil-page.component';
 import { ListarPostagemSeguidosComponent } from './Pages/Postagem/listar-postagem-seguidos/listar-postagem-seguidos.component';
+import { PerfilUsuariosComponent } from './Pages/UI/Perfil/perfil-usuarios/perfil-usuarios.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path:"perfil",
     component: PerfilPageComponent
+  },
+  {
+    path:"perfil/:id",
+    component: PerfilUsuariosComponent
   },
   {
     path:"postagem/listarSeguidos/:userId",

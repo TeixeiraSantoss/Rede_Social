@@ -40,7 +40,7 @@ namespace Back.Controllers
                 _ctx.Postagens.Add(novaPostagem);
                 _ctx.SaveChanges();
 
-                return Ok("Ordem criada com sucesso " + novaPostagem);
+                return Ok(novaPostagem);
             }
             catch (System.Exception e)
             {
@@ -150,7 +150,7 @@ namespace Back.Controllers
                 _ctx.Postagens.Update(postagemExistente);
                 _ctx.SaveChanges();
 
-                return Ok("Postagem Alterada com sucesso " + postagemExistente);
+                return Ok(postagemExistente);
             }
             catch (System.Exception e)
             {
@@ -179,7 +179,7 @@ namespace Back.Controllers
                 _ctx.Postagens.Remove(postagemExistente);
                 _ctx.SaveChanges();
 
-                return Ok("Postagem excluida com sucesso");
+                return Ok();
             }
             catch (System.Exception e)
             {
