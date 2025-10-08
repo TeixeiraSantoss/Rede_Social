@@ -5,17 +5,17 @@ import { UsuarioSeguidoDTO } from 'src/app/DTO/SeguidorDTO/UsuarioSeguidoDTO';
 import { UsuarioSeguidorDTO } from 'src/app/DTO/SeguidorDTO/UsuarioSeguidorDTO';
 
 @Component({
-  selector: 'app-listar-seguidores',
-  templateUrl: './listar-seguidores.component.html',
-  styleUrls: ['./listar-seguidores.component.scss']
+  selector: 'app-listar-seguindo',
+  templateUrl: './listar-seguindo.component.html',
+  styleUrls: ['./listar-seguindo.component.scss']
 })
-export class ListarSeguidoresComponent {
+export class ListarSeguindoComponent {
   constructor(private client: HttpClient, private route: ActivatedRoute){}
   
   id: number = 0
 
-  //Lista de Usuarios que estão seguindo outro usuario
-  seguidores: UsuarioSeguidorDTO[] = []
+  //Lista de Usuarios que estão SENDO seguidos por outros usuarios
+  seguidos: UsuarioSeguidoDTO[] = []
 
   ngOnInit(): void{
 
@@ -30,14 +30,14 @@ export class ListarSeguidoresComponent {
       }
     })
 
-    //Recebe a Lista de usuarios que estão seguindo outros usuarios
-    this.client.get<UsuarioSeguidorDTO[]>(`https://localhost:7088/api/seguidor/listarSeguidores/${this.id}`)
+    //Recebe a lista de usuarios que estão SENDO seguidos
+    this.client.get<UsuarioSeguidoDTO[]>(`https://localhost:7088/api/seguidor/listarSeguidos/${this.id}`)
     .subscribe({
-      next:(seguidores) =>{
-        this.seguidores = seguidores
-        console.log("Lista de seguidores:")
-        console.table(this.seguidores)
-      }, 
+      next:(seguidos) =>{
+        this.seguidos = seguidos
+        console.log("Lista de seguidos:")
+        console.table(this.seguidos)
+      },
       error:(erro) =>{
         console.log(erro)
       }

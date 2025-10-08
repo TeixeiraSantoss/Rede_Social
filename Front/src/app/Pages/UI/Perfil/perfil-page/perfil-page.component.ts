@@ -14,9 +14,14 @@ export class PerfilPageComponent {
 
   usuario: UsuarioReadDTO | null = null
   
+  id: number = 0
+
   ngOnInit():void{
     this.usuario = this.auth.getUsuario()
     console.log(this.usuario)
+    if(this.usuario){
+      this.id = this.usuario.id
+    }
   }
 
   irParaEditarUsuario(): void{
@@ -36,5 +41,13 @@ export class PerfilPageComponent {
         console.log("usuario deletado")
       }
     })
+  }
+
+  irParaListaSeguidos(id: number):void{
+    this.router.navigate([`seguidores/listarSeguidos/${id}`])
+  }
+
+  irParaListaSeguidores(id: number):void{
+    this.router.navigate([`seguidores/listarSeguidores/${id}`])
   }
 }

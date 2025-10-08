@@ -12,10 +12,11 @@ import { AuthService } from 'src/app/Service/auth.service';
 export class PerfilUsuariosComponent {
   constructor(private client: HttpClient, 
     private router: ActivatedRoute, 
-    private route: Router,
-    private auth: AuthService){}
+    private route: Router){}
 
   usuario: UsuarioReadDTO | null = null
+
+  id: number = 0
 
   //Recuperando "Id" da URL para poder retornar os dados do usuario 
   ngOnInit(): void{
@@ -23,6 +24,8 @@ export class PerfilUsuariosComponent {
     .subscribe({
       next:(parametros) =>{
         let {id} = parametros
+
+        this.id = id
 
         //Requisição para receber os dados do usuario
         this.client.get<UsuarioReadDTO>(`https://localhost:7088/api/usuario/buscar/${id}`)
@@ -44,42 +47,12 @@ export class PerfilUsuariosComponent {
     })
   }
 
-  //Metodos do menu
-  irParaEditarUsuario(): void{
-    this.route.navigate([`usuario/editar/${this.usuario?.id}`])
+  irParaListaSeguidos(id: number):void{
+    this.route.navigate([`seguidores/listarSeguidos/${id}`])
   }
 
-  teste(): void{
-    this.route.navigate([""]) 
-  }
-
-  excluir():void{
-    this.client.delete(`https://localhost:7088/api/usuario/excluir/${this.usuario?.id}`)
-    .subscribe({
-      next:() => {
-        this.auth.logout()
-        this.route.navigate([""])
-        console.log("usuario deletado")
-      }
-    })
-  }
-
-  //Metodos das postagens
-  Editar(id: number): void{
-    console.log(id)
-    this.route.navigate([`postagem/editar/${id}`])
-  }
-
-  Excluir(id: number): void{
-    this.client.delete(`https://localhost:7088/api/postagem/excluir/${id}`)
-    .subscribe({
-      next:() =>{
-        console.log("postagem excluida")
-      },
-      error:(erro) =>{
-        console.log(erro)
-      }
-    })
+  irParaListaSeguidores(id: number):void{
+    this.route.navigate([`seguidores/listarSeguidores/${id}`])
   }
 
 }

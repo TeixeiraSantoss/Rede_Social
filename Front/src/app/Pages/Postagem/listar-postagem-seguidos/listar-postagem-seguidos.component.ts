@@ -35,7 +35,7 @@ export class ListarPostagemSeguidosComponent {
   }
 
   irParaPerfil(id: number): void{
-    this.route.navigate(["perfil"])
+    this.route.navigate([`perfil/${id}`])
   }
 
 

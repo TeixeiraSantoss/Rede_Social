@@ -1,4 +1,10 @@
 // codigo CSS das informações do usuario
+p{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 100;
+}
+
 #caixa{
     display: flex;
     flex-direction: column;
@@ -11,18 +17,18 @@
     align-items: center;
 }
 
-#userInfo>h1{
-    margin: 15px;
-    font-size: 25px;
-    font-weight: 400;
-    font-family: 'Open Sans', sans-serif;
+#userSeguidores{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px;
+}
+
+#caixaUser{
+    margin-top: 30px;
 }
 
 #caixaUser>p{
     margin-bottom: 5px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 18px;
-    font-weight: 100;
 }
 
 #postagens{
@@ -37,6 +43,7 @@
     border: 1px solid black;
     border-radius: 20px;
     border-top-left-radius: 0px;
+    width: 100%;
 }
 
 #iconeGrade{
@@ -104,4 +111,18 @@
 #boxFunction{
     display: flex;
     justify-content: space-between;
+}
+
+.texto-clicavel {
+  background: none;     
+  border: none;           
+  padding: 0;            
+  margin: 0px 15px 0px 15px;       
+  cursor: pointer;        
+  transition: color 0.5s ease, text-decoration 0.3s ease;          
+}
+
+.texto-clicavel:hover{
+    text-decoration: underline;
+    color: darkblue;
 }

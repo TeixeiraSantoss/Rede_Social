@@ -7,6 +7,16 @@
             <p>@{{usuario?.userName}}</p>
         </div>
 
+        <!-- Lista de seguidores e seguidos -->
+        <div id="userSeguidores">
+            <button class="texto-clicavel" (click)="irParaListaSeguidores(id)"> 
+                <p>Seguidores</p>
+            </button>
+            <button class="texto-clicavel" (click)="irParaListaSeguidos(id)">
+                <p>Seguindo</p>
+            </button>
+        </div>
+
         <!-- Botão com os três pontinhos -->
         <button id="moreVert" mat-icon-button [matMenuTriggerFor]="menuOpcoes">
             <mat-icon>more_vert</mat-icon>

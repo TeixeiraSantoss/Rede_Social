@@ -1,7 +1,7 @@
 <div *ngFor="let p of postagens" id="postagem">
   <!-- topo com o userName do usuario logado -->
   <div id="userName">
-    <button class="texto-clicavel">
+    <button class="texto-clicavel" (click)="irParaPerfil(p.usuarioId)">
         @{{p.usuarioId}}
     </button>
   </div>

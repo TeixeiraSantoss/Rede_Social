@@ -21,6 +21,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ListarPostagemSeguidosComponent } from './Pages/Postagem/listar-postagem-seguidos/listar-postagem-seguidos.component';
 import { PerfilUsuariosComponent } from './Pages/UI/Perfil/perfil-usuarios/perfil-usuarios.component';
+import { ListarSeguindoComponent } from './Pages/Seguidores/listar-seguindo/listar-seguindo.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PerfilUsuariosComponent } from './Pages/UI/Perfil/perfil-usuarios/perfi
     FeedPageComponent,
     PerfilPageComponent,
     ListarPostagemSeguidosComponent,
-    PerfilUsuariosComponent
+    PerfilUsuariosComponent,
+    ListarSeguindoComponent
   ],
   imports: [
     BrowserModule,
