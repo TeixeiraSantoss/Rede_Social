@@ -8,8 +8,14 @@
         </div>
     </div>
     <div id="divCentro">
-        <div id="searchBar">
-            <p>Barra de Pesquisa</p>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="inputTitulo" [(ngModel)]="termoPesquisa" name="termoPesquisa" autocomplete="off" placeholder="pesquisa">
+            
+            <div id="usuariosFiltrados" *ngFor="let u of usuariosFiltrados">
+                <button class="texto-clicavel" (click)="navegarPerfilUserFiltrado(u.id)">
+                    @{{u?.userName}} 
+                </button>
+            </div>
         </div>
         <div>
             <app-listar-postagem-seguidos></app-listar-postagem-seguidos>
@@ -18,4 +24,4 @@
     <div id="divDireita">
         <button id="novaPubli" (click)="irParaCadastrar()">Nova Publicação</button>
     </div>
-</div>
+</div> 
