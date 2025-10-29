@@ -5,13 +5,21 @@
             <p>{{usuario?.nome}}</p>
             <p>@{{usuario?.userName}}</p>
         </div>
+        <div>
+            <button *ngIf="!seguindo" type="button" class="btn btn-outline-primary" (click)="seguirUsuario()">
+                Seguir
+            </button>
+            <button *ngIf="seguindo" type="button" class="btn btn-outline-primary" (click)="deixarSeguir()">
+                Deixar de Seguir
+            </button>
+        </div>
         <div id="userSeguidores">
             <button class="texto-clicavel" (click)="irParaListaSeguidores(id)"> 
                 <p>Seguidores</p>
             </button>
             <button class="texto-clicavel" (click)="irParaListaSeguidos(id)">
                 <p>Seguindo</p>
-            </button>
+            </button> 
         </div>
     </div>
 

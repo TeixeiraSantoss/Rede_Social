@@ -63,6 +63,19 @@ export class AuthService {
     }
   }
 
+  setListaSeguindo(usuarioEditado: UsuarioReadDTO){
+    let usuarioLogado = this.getUsuario()
+
+    if(!usuarioLogado){
+      return
+    }
+
+    if(usuarioLogado.seguindo.length != usuarioEditado.seguindo.length){
+      usuarioLogado.seguindo = usuarioEditado.seguindo
+    }
+    sessionStorage.setItem('usuario', JSON.stringify(usuarioLogado))
+  }
+
   //Metodo setUsuario
   //Vai alterar os dados do usuario caso haja alguma alteração
   setUsuarioEditado(usuarioEditado: UsuarioEditDTO){

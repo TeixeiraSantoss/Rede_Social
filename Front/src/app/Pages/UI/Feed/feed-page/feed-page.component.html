@@ -8,10 +8,10 @@
         </div>
     </div>
     <div id="divCentro">
-        <div class="mb-3">
+        <div class="mb-3" id="searchBar">
             <input type="text" class="form-control" id="inputTitulo" [(ngModel)]="termoPesquisa" name="termoPesquisa" autocomplete="off" placeholder="pesquisa">
-            
-            <div id="usuariosFiltrados" *ngFor="let u of usuariosFiltrados">
+            <div id="searchResult" *ngFor="let u of usuariosFiltrados">
+                
                 <button class="texto-clicavel" (click)="navegarPerfilUserFiltrado(u.id)">
                     @{{u?.userName}} 
                 </button>

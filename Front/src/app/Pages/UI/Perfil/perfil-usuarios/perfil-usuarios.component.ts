@@ -1,7 +1,9 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SeguidorCreatDTO } from 'src/app/DTO/SeguidorDTO/SeguidorCreatDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
+import { SeguidorModel } from 'src/app/Models/SeguidorModel';
 import { AuthService } from 'src/app/Service/auth.service';
 
 @Component({
@@ -10,16 +12,23 @@ import { AuthService } from 'src/app/Service/auth.service';
   styleUrls: ['./perfil-usuarios.component.scss']
 })
 export class PerfilUsuariosComponent {
-  constructor(private client: HttpClient, 
+  constructor(private client: HttpClient,
+    private auth: AuthService,
     private router: ActivatedRoute, 
     private route: Router){}
 
+  usuarioLogado: UsuarioReadDTO | null = this.auth.getUsuario()
+
   usuario: UsuarioReadDTO | null = null
+
+  //variavel para controlar se o usuarioLogado segue ou não o usuario
+  seguindo: boolean = false
 
   id: number = 0
 
   //Recuperando "Id" da URL para poder retornar os dados do usuario 
   ngOnInit(): void{
+    console.log(this.usuarioLogado)
     this.router.params
     .subscribe({
       next:(parametros) =>{
@@ -42,9 +51,13 @@ export class PerfilUsuariosComponent {
         })
       },
       error:(erro) =>{
-        console.log(erro)
+        console.log(erro)       
       }
     })
+
+    //verifica se o usuario é seguido ou não
+    this.seguindo = this.verificarSeguidor()
+    console.log(this.seguindo)
   }
 
   irParaListaSeguidos(id: number):void{
@@ -54,5 +67,99 @@ export class PerfilUsuariosComponent {
   irParaListaSeguidores(id: number):void{
     this.route.navigate([`seguidores/listarSeguidores/${id}`])
   }
+
+  //verifica se o usuario está sendo seguido pelo "usuarioLogado"
+  verificarSeguidor():boolean{
+    if (!this.usuarioLogado) return false;
+
+    // verifica se o usuarioLogado segue o usuario atual (id)
+    return this.usuarioLogado.seguindo.some(s => s.seguidoId == this.id);
+  }
+
+  seguirUsuario():void{
+    //verifica se existe algum usuario logado na aplicação
+    //isso deve ser feito porque o objeto "usuarioLogado" tem a possibilidade de ser "null"
+    if(!this.usuarioLogado){
+      console.log("nenhum usuario logado na aplicação")
+      return;
+    }
+
+    const seguirInfos: SeguidorCreatDTO = {
+      seguidoId: this.id,
+      seguidorId: this.usuarioLogado.id
+    }
+
+    this.client.post<SeguidorCreatDTO>("https://localhost:7088/api/seguidor/seguirUsuario", seguirInfos)
+    .subscribe({
+      next:() => {
+        console.log("Usuario seguido com sucesso")
+
+        //Faz uma chamada para atualizar a lista de "seguidos"
+        this.client.get<SeguidorModel[]>(`https://localhost:7088/api/seguidor/listarSeguidos/${this.usuarioLogado?.id}`)
+        .subscribe({
+          next:(listaSeguidos) => {
+            if(this.usuarioLogado){
+              this.usuarioLogado.seguindo = listaSeguidos
+
+              this.auth.setListaSeguindo(this.usuarioLogado)
+            }
+            console.log(this.usuarioLogado)            
+          },
+          error:(erro) => {
+            console.log(erro)
+          }
+        })
+
+        this.seguindo = this.verificarSeguidor()
+      },
+      error:(erro) =>{
+        console.log(erro)
+      }
+    })
+    
+  }
+
+  deixarSeguir():void{
+    if(!this.usuarioLogado){
+      console.log("nenhum usuario logado na aplicação")
+      return;
+    }
+
+    const seguirInfos: SeguidorCreatDTO = {
+      seguidoId: this.id,
+      seguidorId: this.usuarioLogado.id
+    }
+
+    this.client.delete<SeguidorCreatDTO>("https://localhost:7088/api/seguidor/DeixarSeguir", {body: seguirInfos})
+    .subscribe({
+      next:() => {
+        console.log("Usuario deixado de seguir")
+
+        //Faz uma chamada para atualizar a lista de "seguidos"
+        this.client.get<SeguidorModel[]>(`https://localhost:7088/api/seguidor/listarSeguidos/${this.usuarioLogado?.id}`)
+        .subscribe({
+          next:(listaSeguidos) => {
+            if(this.usuarioLogado){
+              this.usuarioLogado.seguindo = listaSeguidos
+
+              this.auth.setListaSeguindo(this.usuarioLogado)
+            }
+            console.log(this.usuarioLogado)            
+          },
+          error:(erro) => {
+            console.log(erro)
+          }
+        })
+
+        this.seguindo = this.verificarSeguidor()
+      },
+      error:(erro) => {
+        console.log(erro)
+      }
+    })
+
+  }
+
+
 
 }
