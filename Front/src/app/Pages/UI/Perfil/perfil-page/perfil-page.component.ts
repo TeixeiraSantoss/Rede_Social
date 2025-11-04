@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
 import { AuthService } from 'src/app/Service/auth.service';
 
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/Service/auth.service';
 export class PerfilPageComponent {
   constructor(private auth: AuthService, private router: Router, private client: HttpClient){}
 
-  usuario: UsuarioReadDTO | null = null
+  usuario: UsuarioFindDTO | null = null
   
   id: number = 0
 

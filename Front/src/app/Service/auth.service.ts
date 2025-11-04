@@ -8,6 +8,7 @@ import { UsuarioSeguidoDTO } from '../DTO/SeguidorDTO/UsuarioSeguidoDTO';
 import { SeguidorModel } from '../Models/SeguidorModel';
 import { PostagemModel } from '../Models/PostagemModel';
 import { UsuarioEditDTO } from '../DTO/UsuarioDTO/UsuarioEditDTO';
+import { UsuarioFindDTO } from '../DTO/UsuarioDTO/UsuarioFindDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,9 @@ export class AuthService {
 
   login(usuario: UsuarioLoginDTO, onSucess:() => void): void{
 
-    let usuarioSalvar: UsuarioReadDTO
+    let usuarioSalvar: UsuarioFindDTO
 
-    this.client.get<UsuarioReadDTO>(`https://localhost:7088/api/usuario/buscar/${usuario.id}`)
+    this.client.get<UsuarioFindDTO>(`https://localhost:7088/api/usuario/buscar/${usuario.id}`)
     .subscribe({
       next:(dadosUsuario) => {
 
@@ -31,6 +32,8 @@ export class AuthService {
           id: dadosUsuario.id,
           nome: dadosUsuario.nome,
           userName: dadosUsuario.userName,
+          email: dadosUsuario.email,
+          senha: dadosUsuario.senha,
           seguidores: dadosUsuario.seguidores,
           seguindo: dadosUsuario.seguindo,
           postagens: dadosUsuario.postagens
@@ -50,20 +53,20 @@ export class AuthService {
   }
 
   //Metodo GetUsuario
-  //Esse metodo vai recuperar o objeto que está armazenado no SessionStorage e converter ele para o tipo UsuarioReadDTO
-  getUsuario(): UsuarioReadDTO | null{
+  //Esse metodo vai recuperar o objeto que está armazenado no SessionStorage e converter ele para o tipo UsuarioFindDTO
+  getUsuario(): UsuarioFindDTO | null{
     //Recupera os dados do sessionStorage
     let dados = sessionStorage.getItem('usuario')
 
     //Verifica se dados é null, e converte para a DTO
     if(dados != null){
-      return JSON.parse(dados) as UsuarioReadDTO;
+      return JSON.parse(dados) as UsuarioFindDTO;
     }else{
       return null;
     }
   }
 
-  setListaSeguindo(usuarioEditado: UsuarioReadDTO){
+  setListaSeguindo(usuarioEditado: UsuarioFindDTO){
     let usuarioLogado = this.getUsuario()
 
     if(!usuarioLogado){

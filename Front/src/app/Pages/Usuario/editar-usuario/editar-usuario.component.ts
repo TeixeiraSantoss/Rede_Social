@@ -2,6 +2,7 @@ import { UsuarioEditDTO } from './../../../DTO/UsuarioDTO/UsuarioEditDTO';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
 import { AuthService } from 'src/app/Service/auth.service';
 
@@ -30,7 +31,7 @@ export class EditarUsuarioComponent {
       }
     })
 
-    this.client.get<UsuarioReadDTO>(`https://localhost:7088/api/usuario/buscar/${this.id}`)
+    this.client.get<UsuarioFindDTO>(`https://localhost:7088/api/usuario/buscar/${this.id}`)
     .subscribe({
       next: (usuario)=>{
         this.nome = usuario.nome

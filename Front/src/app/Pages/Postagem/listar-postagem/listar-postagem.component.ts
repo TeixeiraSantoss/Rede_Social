@@ -2,6 +2,7 @@ import { PostagemReadDTO } from './../../../DTO/PostagemDTO/PostagemReadDTO';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
 import { UsuarioModel } from 'src/app/Models/UsuarioModel';
 import { AuthService } from 'src/app/Service/auth.service';
@@ -15,7 +16,7 @@ export class ListarPostagemComponent {
   constructor(private client: HttpClient, private route: Router, private auth: AuthService){}
 
   postagens: PostagemReadDTO[] = []
-  usuario: UsuarioReadDTO | null = null
+  usuario: UsuarioFindDTO | null = null
 
   ngOnInit(): void{
     this.usuario = this.auth.getUsuario()

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostagemReadDTO } from 'src/app/DTO/PostagemDTO/PostagemReadDTO';
+import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
 import { AuthService } from 'src/app/Service/auth.service';
 
@@ -13,7 +14,7 @@ import { AuthService } from 'src/app/Service/auth.service';
 export class ListarPostagemSeguidosComponent {
   constructor(private client: HttpClient, private auth: AuthService, private route: Router){}
 
-  usuario: UsuarioReadDTO | null = null
+  usuario: UsuarioFindDTO | null = null
 
   postagens: PostagemReadDTO[] = []
   
@@ -38,6 +39,14 @@ export class ListarPostagemSeguidosComponent {
     this.route.navigate([`perfil/${id}`])
   }
 
+  getUserName(id: number): string{
+    let usuarioEncontrado = this.usuario?.seguindo.find(u => u.id === id)
 
+    if(usuarioEncontrado){
+      return usuarioEncontrado.userName;
+    }
+
+    return '';
+  }
 
 }

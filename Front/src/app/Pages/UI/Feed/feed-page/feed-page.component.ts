@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioEditDTO } from 'src/app/DTO/UsuarioDTO/UsuarioEditDTO';
+import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioModel } from 'src/app/Models/UsuarioModel';
 import { AuthService } from 'src/app/Service/auth.service';
 
@@ -14,7 +15,7 @@ import { AuthService } from 'src/app/Service/auth.service';
 export class FeedPageComponent {
   constructor(private client: HttpClient, private router: Router, private auth: AuthService){}
 
-  usuario: UsuarioReadDTO | null = null
+  usuario: UsuarioFindDTO | null = null
 
   //Requisitos para aplicar a barra de pesquisa
   //1º- lista de usuarios e uma lista com os usuarios filtrados
