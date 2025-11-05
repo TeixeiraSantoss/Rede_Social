@@ -18,6 +18,10 @@ export class LoginComponent {
   //Variavel de controle de visibilidade da senha
   senhaVisivel: boolean = false
 
+  //variaveis de controle para exibir menssagem
+  msg: string = ""
+  mostrarMsg: boolean = false 
+
   id: number = 0 
   email: string = ""
   senha: string = ""
@@ -40,16 +44,30 @@ export class LoginComponent {
         //Execultando uma função callback para fazer a navegação
         this.auth.login(dados, () =>{
           //Fim do loading
-          this.isLoading = false
-
-          this.router.navigate(['feed'])          
+          this.isLoading = false          
         });     
+
+        this.msg = "Login bem sucedido"
+        this.exibirMsg()
+
+        setTimeout(() => {
+          this.esconderMsg()
+          this.router.navigate(['feed'])
+        }, 3000)
 
       },
       error:(erro) =>{
         console.log(erro)
         //Fim do loading
         this.isLoading = false
+
+        this.msg = "Email ou Senha incorretos"
+        this.exibirMsg()
+
+        setTimeout(() => {
+          this.esconderMsg()
+        }, 3000)
+
       }
     })
 
@@ -62,5 +80,14 @@ export class LoginComponent {
   toggleSenha(): void{
     //Faz a troca de valor da variavel "senhaVisivel"
     this.senhaVisivel = !this.senhaVisivel
+  }
+
+  //Metodos para exibir menssagem
+  exibirMsg(): void{
+    this.mostrarMsg = true
+  }
+
+  esconderMsg(): void{
+    this.mostrarMsg = false
   }
 }

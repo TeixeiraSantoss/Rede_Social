@@ -26,5 +26,8 @@
       </div>
     </div>
     <button type="submit" class="btn btn-outline-success">Cadastrar</button>
+    <div class="alerta" *ngIf="mostrarMsg">
+      <p id="msgAlerta">{{msg}}</p>
+    </div>
   </div>
-</form>
+</form> 

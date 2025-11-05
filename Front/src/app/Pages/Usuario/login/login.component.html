@@ -28,5 +28,8 @@
       </button>
     </div>
     <div *ngIf="isLoading" class="spinner"></div>
-  </div>
+    <div class="alerta" *ngIf="mostrarMsg">
+      <p id="msgAlerta">{{msg}}</p>
+    </div>
+  </div> 
 </form>

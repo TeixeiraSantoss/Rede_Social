@@ -10,5 +10,8 @@
       <textarea id="inputConteudo" name="conteudo" [(ngModel)]="conteudo"></textarea>
     </div>
     <button type="submit" class="btn btn-outline-success">Postar</button>
+    <div class="alerta" *ngIf="mostrarMsg">
+      <p id="msgAlerta">{{msg}}</p>
+    </div>
   </div>
 </form> 

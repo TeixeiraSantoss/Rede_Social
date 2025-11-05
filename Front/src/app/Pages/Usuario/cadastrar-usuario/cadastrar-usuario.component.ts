@@ -14,6 +14,10 @@ export class CadastrarUsuarioComponent {
   //Variavel de controle de visibilidade da senha
   senhaVisivel: boolean = false
 
+  //Variaveis de controle para exibir menssagens de alerta
+  msg: string = ""
+  mostrarMsg: boolean = false
+
   nome: string = ""
   userName: string = ""
   email: string = ""
@@ -33,10 +37,26 @@ export class CadastrarUsuarioComponent {
       next: () =>{
         console.log("Usuario cadastrado com sucesso")
 
-        this.router.navigate([""])
+        this.msg = "Usuario cadastrado com sucesso"
+
+        this.exibirMsg()
+
+        setTimeout(() => {
+          this.esconderMsg()
+          this.router.navigate([""])
+        }, 3000)
+
       },
       error: (erro) =>{
         console.log(erro)
+
+        this.msg = "Erro ao cadastrar usuario"
+
+        this.exibirMsg()
+
+        setTimeout(() => {
+          this.esconderMsg()
+        }, 3000)
       }
     })
 
@@ -45,5 +65,14 @@ export class CadastrarUsuarioComponent {
   toggleSenha(): void{
     //Faz a troca de valor da variavel "senhaVisivel"
     this.senhaVisivel = !this.senhaVisivel
+  }
+
+  //Metodos para exibir menssagem
+  exibirMsg(): void{
+    this.mostrarMsg = true
+  }
+
+  esconderMsg(): void{
+    this.mostrarMsg = false
   }
 }
