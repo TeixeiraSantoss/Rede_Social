@@ -2,9 +2,9 @@
   <h1>Seguidores</h1>
   <div id="infoSeguidos" *ngFor="let s of seguidores">
     <p id="nome">{{s.nome}}</p>
-    <button class="texto-clicavel"> 
+    <button class="texto-clicavel" (click)="navegarParaPerfil(s.id)"> 
         <p id="userName">@{{s.userName}}</p>
     </button>
     <hr>
-  </div>
+  </div> 
 </div>

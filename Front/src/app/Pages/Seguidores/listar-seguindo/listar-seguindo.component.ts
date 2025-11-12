@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioSeguidoDTO } from 'src/app/DTO/SeguidorDTO/UsuarioSeguidoDTO';
 import { UsuarioSeguidorDTO } from 'src/app/DTO/SeguidorDTO/UsuarioSeguidorDTO';
 
@@ -10,7 +10,7 @@ import { UsuarioSeguidorDTO } from 'src/app/DTO/SeguidorDTO/UsuarioSeguidorDTO';
   styleUrls: ['./listar-seguindo.component.scss']
 })
 export class ListarSeguindoComponent {
-  constructor(private client: HttpClient, private route: ActivatedRoute){}
+  constructor(private client: HttpClient, private route: ActivatedRoute, private router: Router){}
   
   id: number = 0
 
@@ -42,5 +42,9 @@ export class ListarSeguindoComponent {
         console.log(erro)
       }
     });
+  }
+
+  navegarParaPerfil(id: number): void{
+    this.router.navigate([`perfil/${id}`])
   }
 }

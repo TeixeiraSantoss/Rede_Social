@@ -29,8 +29,8 @@ export class PerfilPageComponent {
     this.router.navigate([`usuario/editar/${this.usuario?.id}`])
   }
 
-  teste(): void{
-    this.router.navigate([""]) 
+  logout(): void{
+    this.router.navigate(["login"]) 
   }
 
   excluir():void{

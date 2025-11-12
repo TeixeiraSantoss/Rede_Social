@@ -26,9 +26,10 @@
     flex-direction: column;
 }
 
-#divEsquerda{
-    position: sticky;
-    align-items: center;
+#divEsquerda{   
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
 }
 
 #divCentro{

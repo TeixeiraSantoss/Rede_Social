@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostagemCreatDTO } from 'src/app/DTO/PostagemDTO/PostagemCreateDTO';
 import { AuthService } from 'src/app/Service/auth.service';
@@ -10,72 +11,89 @@ import { AuthService } from 'src/app/Service/auth.service';
   styleUrls: ['./cadastrar-postagem.component.scss']
 })
 export class CadastrarPostagemComponent {
-  constructor(private client: HttpClient, private auth: AuthService, private router: Router){}
+  constructor(private client: HttpClient, private auth: AuthService, private router: Router, private fb: FormBuilder){}
 
-  titulo: string = ""
-  conteudo: string = ""
+  //Representa o formulario inteiro
+  form!: FormGroup
+  //flag para bloquear UI durante submissão
+  isSubmitting = false
+  //array para receber menssagens de erro do servidor
+  //o array deve sempre conter apenas 1 menssagem de erro para evitar erro de logica no template
+  serverErrors: string[] = []
+
   UsuarioId: number = 0
 
-  //variaveis para controle das menssagens de alerta
-  msg: string = ""
-  mostrarMsg: boolean = false
-
-  teste(): void{
-    console.log(this.titulo)
-    console.log(this.conteudo)
-    console.log(this.UsuarioId)
+  ngOnInit(): void{
+    //Cria o FormGroup já com os FormControls e Validators
+    this.form = this.fb.group({
+      titulo: ['', [Validators.required, Validators.minLength(3), this.naoSoEspacosValidator]],
+      conteudo: ['', [Validators.required, Validators.minLength(3), this.naoSoEspacosValidator]] 
+    })
   }
 
-  cadastrar(): void{
+  //Validator customizado
+  //bloqueia valores que sejam so espaços
+  naoSoEspacosValidator(control: AbstractControl): ValidationErrors | null{
+    const v = control.value as string | null
+    if(v == null) return null
+    return v.trim().length === 0 ? {apenasEspacos: true} : null
+  }
 
+  //Getters
+  get titulo(): AbstractControl | null {return this.form.get('titulo')}
+  get conteudo(): AbstractControl | null {return this.form.get('conteudo')}
+
+  //Metodo onSubmit
+  //vai ser chamado ao submeter o fomulario
+  onSubmit(): void{
+    //Caso o formulario ja tenha sido enviado 1 vez, evita que seja enviado novamente
+    if (this.isSubmitting) return
+
+    //Validação do formulario
+    if(this.form.invalid){
+      this.form.markAllAsTouched()
+      return
+    }
+
+    //verifica se usuario esta logado
     let dadosUsuario = this.auth.getUsuario()
 
-    if(dadosUsuario?.id != undefined){
-      
-      let novaPostagem: PostagemCreatDTO = {
-        titulo: this.titulo,
-        conteudo: this.conteudo,
-        UsuarioId: dadosUsuario?.id
-      }
+    if(!dadosUsuario){
+      this.serverErrors = ['Não tem nenhum usuario logado']
+      return
+    }
 
-      this.client.post<PostagemCreatDTO>("https://localhost:7088/api/postagem/cadastrar", novaPostagem)
+    //Contruindo DTO
+    const formValue = this.form.value
+    const novaPostagem: PostagemCreatDTO ={
+      titulo: (formValue.titulo as string).trim(),
+      conteudo: (formValue.conteudo as string).trim(),
+      UsuarioId: dadosUsuario.id
+    }
+
+    //limpa menssagens de erro anteriores e seta flag de envio
+    this.serverErrors = []
+    this.isSubmitting = true
+
+    //Requisição HTTP para cadastrar postagem
+    this.client.post<PostagemCreatDTO>("https://localhost:7088/api/postagem/cadastrar", novaPostagem)
       .subscribe({
         next: () =>{
           console.log("Postagem cadastrada com sucesso")
+          //Limpa Formulario
+          this.form.reset()
+          this.isSubmitting = false
 
-          this.msg = "Postagem cadastrada com sucesso"
-
-          this.exibirMsg()
-
-          setTimeout(() => {
-            this.esconderMsg()
-            this.router.navigate(["/feed"]); 
-          }, 3000)
+          //redireciona para o feed
+          this.router.navigate(["/feed"]);
         },
         error: (erro) =>{
           console.log(erro)
 
-          this.msg = "Erro ao cadastrar postagem"
-
-          this.exibirMsg()
-
-          setTimeout(() => {
-            this.esconderMsg()
-          }, 3000)
+          this.isSubmitting = false
         }
       })
-      
-    }  
 
-  } 
-  
-  //Metodos para exibir menssagem
-  exibirMsg(): void{
-    this.mostrarMsg = true
-  }
-
-  esconderMsg(): void{
-    this.mostrarMsg = false
   }
 
 }

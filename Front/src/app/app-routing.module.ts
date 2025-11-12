@@ -20,6 +20,10 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: "login",
+    component: LoginComponent
+  },
+  {
     path: "postagem/listar",
     component: ListarPostagemComponent
   },
