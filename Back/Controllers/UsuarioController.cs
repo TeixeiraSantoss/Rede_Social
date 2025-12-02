@@ -7,6 +7,7 @@ using Back.DTO.PostagemDTO;
 using Back.DTO.SeguidorDTO;
 using Back.DTO.UsuarioDTO;
 using Back.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ namespace Back.Controllers
     [Route("api/usuario")]
     public class UsuarioController : ControllerBase
     {
+        //Hashear a senha
+        private readonly PasswordHasher<UsuarioModel> _passwordHasher = new PasswordHasher<UsuarioModel>();
         private readonly AppDbContext _ctx;
         public UsuarioController(AppDbContext ctx)
         {
@@ -41,9 +44,11 @@ namespace Back.Controllers
                 {
                     nome = usuario.nome,
                     userName = usuario.userName,
-                    email = usuario.email,
-                    senha = usuario.senha
+                    email = usuario.email
                 };
+
+                //Hasheando a senha
+                novoUsuario.senha = _passwordHasher.HashPassword(novoUsuario, usuario.senha);
 
                 _ctx.Usuarios.Add(novoUsuario);
                 _ctx.SaveChanges();
@@ -251,7 +256,10 @@ namespace Back.Controllers
                     return NotFound("Nenhum usurio encontrado");
                 }
 
-                if (dadosUsusario.senha == loginInfo.senha)
+                //verifica se a senha vinda do Front é compativel com a senha do usuario
+                var resultado = _passwordHasher.VerifyHashedPassword(usuarioExistente, dadosUsusario.senha, loginInfo.senha);
+
+                if (resultado == PasswordVerificationResult.Success)
                 {
                     return Ok(dadosUsusario);
                 }
