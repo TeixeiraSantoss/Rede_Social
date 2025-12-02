@@ -1,6 +1,8 @@
+import { Location } from '@angular/common';
 import { UsuarioEditDTO } from './../../../DTO/UsuarioDTO/UsuarioEditDTO';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
@@ -12,13 +14,35 @@ import { AuthService } from 'src/app/Service/auth.service';
   styleUrls: ['./editar-usuario.component.scss']
 })
 export class EditarUsuarioComponent {
-  constructor(private client: HttpClient, private router: ActivatedRoute, private route: Router, private auth: AuthService){}
+  constructor(private client: HttpClient, 
+    private router: ActivatedRoute, 
+    private route: Router, 
+    private auth: AuthService,
+    private fb: FormBuilder,
+    private location: Location){}
+    
+  //Representa o formulario
+  form!: FormGroup
 
-  id: number = 0 
-  nome: string = ""
-  userName: string = ""
+  //controla as mensagens de sucesso
+  mensagemSucesso: string | null = null
+
+  //flag de envio
+  isSubmitting = false
+
+  //array que recebe mensagens de erro
+  serverErrors: string[] = []
+
+  usuario: UsuarioFindDTO | null = null
+  id: number = 0
 
   ngOnInit():void{
+
+    //Define quais são os requisitos de cada campo de formulario
+    this.form = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(3), this.naoSoEspacoValidator]],
+      userName: ['', [Validators.required, Validators.minLength(3), this.naoSoEspacoValidator]]
+    })
 
     this.router.params
     .subscribe({
@@ -34,8 +58,10 @@ export class EditarUsuarioComponent {
     this.client.get<UsuarioFindDTO>(`https://localhost:7088/api/usuario/buscar/${this.id}`)
     .subscribe({
       next: (usuario)=>{
-        this.nome = usuario.nome
-        this.userName = usuario.userName
+        this.usuario = usuario
+
+        //Preenche os inputs com os dados vindos da API
+        this.preencherCampos()
       },
       error: (erro)=>{
         console.log(erro)
@@ -43,28 +69,78 @@ export class EditarUsuarioComponent {
     })
   }
 
+  //Valida e retira espaços vazios
+  naoSoEspacoValidator(control: AbstractControl): ValidationErrors | null{
+    const v = control.value as string | null
+
+    if(v == null) return null
+
+    return v.trim().length === 0 ? {apenasEspacos: true} : null
+  }
+
+  //Getters
+  get nome(): AbstractControl | null {return this.form.get('nome')}
+  get userName(): AbstractControl | null {return this.form.get('userName')}
+
   editar():void {
-    console.log("entrou no editar")
-    let usuarioEditado: UsuarioEditDTO = {
-      nome: this.nome,
-      userName: this.userName
+    //verifica se o formulario ja foi enviado
+    if(this.isSubmitting) return
+
+    //Valida o formulario
+    if(this.form.invalid){
+      this.form.markAllAsTouched()
+      return
     }
-    console.log(this.id)
+
+    //Verifica se existe usuario logado
+    let dadosUsuario = this.auth.getUsuario()
+
+    if(!dadosUsuario){
+      this.serverErrors = ["Nenhum usuario logado, não foi possivel realizar a operação"]
+      return
+    }
+
+    //construindo DTO
+    const formValue = this.form.value
+    const usuarioEditado: UsuarioEditDTO = {
+      nome: (formValue.nome as string).trim(),
+      userName: (formValue.userName as string).trim()
+    }
 
     this.client.patch<UsuarioEditDTO>(`https://localhost:7088/api/usuario/editar/${this.id}`, usuarioEditado)
     .subscribe({
       next: ()=>{
-        console.log("entrou no next")
         this.auth.setUsuarioEditado(usuarioEditado)
         
-        console.log("Usuario alterado com sucesso", this.auth.getUsuario())
+        this.mensagemSucesso = "Dados do Usuario alterados com sucesso"
 
-        this.route.navigate(["/perfil"])
+        setTimeout(() => {
+          this.mensagemSucesso = null
+          
+          this.form.reset()
+          this.isSubmitting = false
+
+          this.route.navigate(["/perfil"])
+        }, 3000)
+
       },
       error: (erro)=>{
         console.log(erro)
+
+        this.isSubmitting = false
       }
     })    
     
+  }
+
+  preencherCampos(): void{
+    this.form.patchValue({
+      nome: this.usuario?.nome,
+      userName: this.usuario?.userName
+    })
+  }
+
+  voltarPagina():void {
+    this.location.back()
   }
 }

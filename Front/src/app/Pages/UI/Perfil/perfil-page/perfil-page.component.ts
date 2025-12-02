@@ -51,4 +51,8 @@ export class PerfilPageComponent {
   irParaListaSeguidores(id: number):void{
     this.router.navigate([`seguidores/listarSeguidores/${id}`])
   }
+
+  voltarPagina(): void{
+    this.router.navigate(["feed"])
+  }
 }

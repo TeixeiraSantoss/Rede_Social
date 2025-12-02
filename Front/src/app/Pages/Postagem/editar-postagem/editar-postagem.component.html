@@ -1,14 +1,68 @@
-<form (ngSubmit)="Editar()">
+<div class="mt-4 ms-5">
+  <button id="btnBack" (click)="voltarPagina()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="m-5">
   <div id="caixa">
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Titulo</label>
-      <input type="text" class="form-control" id="inputTitulo" aria-describedby="emailHelp" [(ngModel)]="titulo" name="titulo" autocomplete="off">
+
+    <!-- mostra um alerta caso o backEnd retorne algum erro -->
+    <div *ngIf="serverErrors?.length" class="alert alert-danger">
+      <div *ngFor="let msg of serverErrors">{{msg}}</div>
     </div>
+
+    <!-- Titulo -->
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Conteudo</label>
+      <label for="titulo" class="form-label">Titulo</label>
+
+      <input type="text" 
+      class="form-control" 
+      id="inputTitulo"
+      formControlName="titulo"
+      [class.is-invalid]="titulo?.touched && titulo?.invalid"
+      name="titulo" 
+      autocomplete="off">
+
+      <!-- Tratativa de errors -->
+      <div *ngIf="titulo?.touched && titulo?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="titulo?.errors?.['required']">O titulo é obrigatorio</div>
+        <div *ngIf="titulo?.errors?.['minlength']">O titulo precisa ter no minimo 3 caracteres</div>
+        <div *ngIf="titulo?.errors?.['apenasEspacos']">O titulo não pode ter apenas espaços</div>
+      </div>
+
+    </div>
+
+    <!-- Conteudo -->
+    <div class="mb-3">
+      <label for="conteudo" class="form-label">Conteudo</label>
+
       <br>
-      <textarea id="inputConteudo" name="conteudo" [(ngModel)]="conteudo"></textarea>
+
+      <textarea id="inputConteudo" 
+      name="conteudo" 
+      formControlName="conteudo"
+      [class.is-invalid]="conteudo?.touched && conteudo?.invalid"
+      autocomplete="off"></textarea>
+
+      <!-- Tratativa de errors -->
+      <div *ngIf="conteudo?.touched && conteudo?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="conteudo?.errors?.['required']">O conteudo é obrigatorio</div>
+        <div *ngIf="conteudo?.errors?.['minlength']">O conteudo precisa ter no minimo 3 caracteres</div>
+        <div *ngIf="conteudo?.errors?.['apenasEspacos']">O conteudo não pode ter apenas espaços</div>
+      </div>
+
     </div>
-    <button type="submit" class="btn btn-outline-success">Concluir</button>
+
+    <button type="submit" class="btn btn-outline-success" [disabled]="form.invalid || isSubmitting">
+      Concluir
+    </button>
+
+    <diV *ngIf="mensagemSucesso" class="alert alert-success mt-3">
+      {{ mensagemSucesso }}
+    </diV>
+
   </div>
 </form>

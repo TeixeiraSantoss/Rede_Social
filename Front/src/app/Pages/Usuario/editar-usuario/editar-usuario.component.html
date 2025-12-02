@@ -1,13 +1,65 @@
-<form (ngSubmit)="editar()">
+<div class="mt-4 ms-5">
+  <button id="btnBack" (click)="voltarPagina()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="editar()">
   <div id="boxUsuario">
+
+    <!-- mostra alertas de erros -->
+     <div *ngIf="serverErrors?.length" class="alert alert-danger">
+      <div *ngFor="let msg of serverErrors">{{msg}}</div>
+     </div>
+
+     <!-- Nome -->
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome" autocomplete="off">
+      <label for="nome" class="form-label">Nome</label>
+
+      <input type="text" 
+      class="form-control" 
+      id="exampleInputEmail1"
+      name="nome" 
+      formControlName="nome"
+      [class.is-invalid]="nome?.touched && nome?.invalid"
+      autocomplete="off">
+
+      <!-- Tratativa de errors -->
+      <div *ngIf="nome?.touched && nome?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="nome?.errors?.['required']">O nome é obrigatorio</div>
+        <div *ngIf="nome?.errors?.['minlength']">O nome precisa ter no minimo 3 caracteres</div>
+        <div *ngIf="nome?.errors?.['apenasEspacos']">O nome não pode ter apenas espaços</div>
+      </div>
+
     </div>
+
+    <!-- UserName -->
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">User Name</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName" autocomplete="off">
+      <label for="userName" class="form-label">User Name</label>
+
+      <input type="text" 
+      class="form-control"
+      name="userName" 
+      formControlName="userName"
+      [class.is-invalid]="userName?.touched && userName?.invalid"
+      autocomplete="off">
+
+      <!-- Tratativa de errors -->
+      <div *ngIf="userName?.touched && userName?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="userName?.errors?.['required']">O userName é obrigatorio</div>
+        <div *ngIf="userName?.errors?.['minlength']">O userName precisa ter no minimo 3 caracteres</div>
+        <div *ngIf="userName?.errors?.['apenasEspacos']">O userName não pode ter apenas espaços</div>
+      </div>
+
     </div>
+
     <button type="submit" class="btn btn-primary">Enviar</button>
+
+    <diV *ngIf="mensagemSucesso" class="alert alert-success mt-3">
+      {{ mensagemSucesso }}
+    </diV>
+
   </div>
-</form> 
+</form>  

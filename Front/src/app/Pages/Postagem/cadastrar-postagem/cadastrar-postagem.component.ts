@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/Service/auth.service';
   styleUrls: ['./cadastrar-postagem.component.scss']
 })
 export class CadastrarPostagemComponent {
-  constructor(private client: HttpClient, private auth: AuthService, private router: Router, private fb: FormBuilder){}
+  constructor(private client: HttpClient, private auth: AuthService, private router: Router, private fb: FormBuilder, private location: Location){}
 
   //Representa o formulario inteiro
   form!: FormGroup
@@ -100,13 +101,17 @@ export class CadastrarPostagemComponent {
 
           
         },
-        error: (erro) =>{
+        error: (erro) =>{ 
           console.log(erro)
 
           this.isSubmitting = false
         }
       })
 
+  }
+
+  voltarPagina(): void{
+    this.location.back()
   }
 
 }

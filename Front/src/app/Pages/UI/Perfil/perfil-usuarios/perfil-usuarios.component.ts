@@ -1,11 +1,10 @@
-import { HttpBackend, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeguidorCreatDTO } from 'src/app/DTO/SeguidorDTO/SeguidorCreatDTO';
 import { UsuarioSeguidoDTO } from 'src/app/DTO/SeguidorDTO/UsuarioSeguidoDTO';
 import { UsuarioFindDTO } from 'src/app/DTO/UsuarioDTO/UsuarioFindDTO';
 import { UsuarioReadDTO } from 'src/app/DTO/UsuarioDTO/UsuarioReadDTO';
-import { SeguidorModel } from 'src/app/Models/SeguidorModel';
 import { AuthService } from 'src/app/Service/auth.service';
 
 @Component({
@@ -165,6 +164,8 @@ export class PerfilUsuariosComponent {
 
   }
 
-
+  voltarPagina(): void{
+    this.route.navigate(["feed"])
+  }
 
 }
