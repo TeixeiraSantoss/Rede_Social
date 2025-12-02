@@ -1,35 +1,79 @@
-<form (ngSubmit)="login()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
   <div id="caixa">
+  <!-- mensagens de erro do servidor (globais) -->
+  <div *ngIf="serverErros?.length" class="alert alert-danger mt-5">
+    <div *ngFor="let msg of serverErros">{{ msg }}</div>
+  </div>
     <div id="boxLogin">
+
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Email</label>
-        <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email" autocomplete="off">
+        <label for="email" class="form-label">Email</label>
+
+        <input id="email"
+         type="text"
+         class="form-control"
+         [class.is-invalid]="email?.touched && email?.invalid"
+         name="email" 
+         autocomplete="off"
+         formControlName="email"
+         placeholder="Email">
+
+        <div *ngIf="email?.touched && email?.invalid" class="invalid-feedback d-block">
+          <div *ngIf="email?.errors?.['required']">Email é obrigatorio</div>
+          <div *ngIf="email?.errors?.['apenasEspacos']">Email não pode conter apenas espaços vazios</div>  
+        </div>
+
       </div>
+
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Senha</label>
+        <label for="senha" class="form-label">Senha</label>
+
         <div id="boxSenha">
-          <input id="senha" [type]="senhaVisivel ? 'text' : 'password'" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha" autocomplete="off">
+          <input id="senha" 
+          [type]="senhaVisivel ? 'text' : 'password'" 
+          class="form-control"
+          aria-describedby="emailHelp" 
+          [class.is-invalid]="senha?.touched && senha?.invalid" 
+          name="senha" 
+          autocomplete="off"
+          formControlName="senha"
+          placeholder="senha">
 
           <button type="button" id="toggleSenha" (click)="toggleSenha()">
             <span class="material-icons">
               <mat-icon>{{ senhaVisivel ? 'visibility_off' : 'visibility' }}</mat-icon>
             </span>
           </button>
-
         </div>
+
+        <div *ngIf="senha?.touched && senha?.invalid" class="invalid-feedback d-block">
+          <div *ngIf="senha?.errors?.['required']">Senha é obrigatorio</div>
+          <div *ngIf="senha?.errors?.['apenasEspacos']">Senha não pode conter apenas epaços</div>
+        </div> 
+
       </div>
-      <button id="btnEntrar" type="submit" class="btn btn-outline-success" [disabled]="isLoading">
+
+      <button id="btnEntrar"
+      type="submit" 
+      class="btn btn-outline-success" 
+      [disabled]="isLoading || form.invalid">
         {{ isLoading ? "Entando..." : "Entrar" }}
       </button>
+
     </div>
+
     <div>
       <button id="textoClicavel" (click)="irParaCadastrarUsuario()">
         Cadastrar-se
       </button>
     </div>
-    <div *ngIf="isLoading" class="spinner"></div>
-    <div class="alerta" *ngIf="mostrarMsg">
-      <p id="msgAlerta">{{msg}}</p>
+
+    <div *ngIf="mensagemSucesso" class="alert alert-success mt-3">
+      {{ mensagemSucesso }}
     </div>
+
+    <div *ngIf="isLoading" class="spinner"></div>
+
   </div> 
 </form>

@@ -1,21 +1,79 @@
-<form (ngSubmit)="cadastrar()">
+<div class="mt-4 ms-5">
+  <button id="btnBack" (click)="voltarPagina()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div id="boxUsuario">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="nome" name="nome" autocomplete="off">
+
+      <input type="text"
+      formControlName="nome" 
+      [class.is-invalid]="nome?.touched && nome?.invalid"
+      class="form-control"
+      aria-describedby="emailHelp"  
+      name="nome" 
+      autocomplete="off"
+      placeholder="Informe seu nome">
+
+      <div *ngIf="nome?.touched && nome?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="nome?.errors?.['required']">O nome é obrigatorio</div>
+        <div *ngIf="nome?.errors?.['apenasEspacos']">O nome não pode ter apenas espaços</div>
+      </div>
     </div>
+
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">User Name</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="userName" name="userName" autocomplete="off">
+
+      <input type="text" 
+      formControlName="userName"
+      [class.is-invalid]="userName?.touched && userName?.invalid"
+      class="form-control"  
+      name="userName" 
+      autocomplete="off"
+      placeholder="Informe o user name">
+
+      <div *ngIf="userName?.touched && userName?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="userName?.errors?.['required']">O user name é obrigatorio</div>
+        <div *ngIf="userName?.errors?.['apenasEspacos']">O user name não pode ter apenas espaços</div>
+      </div>
     </div>
+
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Email</label>
-      <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="email" name="email" autocomplete="off">
+
+      <input type="text" 
+      formControlName="email"
+      [class.is-invalid]="email?.touched && email?.invalid"
+      class="form-control" 
+      name="email" 
+      autocomplete="off"
+      placeholder="Informe seu email">
+
+      <div *ngIf="email?.touched && email?.invalid" class="invalid-feedback d-block">
+        <!-- trata as condições que foram estabelecidas para o input -->
+        <div *ngIf="email?.errors?.['required']">O email é obrigatorio</div>
+        <div *ngIf="email?.errors?.['apenasEspacos']">O email não pode ter apenas espaços</div>
+      </div>
     </div>
+
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Senha</label>
+
       <div id="boxSenha">
-        <input id="senha" [type]="senhaVisivel ? 'text' : 'password'" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [(ngModel)]="senha" name="senha" autocomplete="off">
+        <input id="senha" 
+        formControlName="senha"
+        [class.is-invalid]="senha?.touched && senha?.invalid"
+        [type]="senhaVisivel ? 'text' : 'password'" 
+        class="form-control"
+        aria-describedby="emailHelp"  
+        name="senha" 
+        autocomplete="off"
+        placeholder="Digite sua senha">
 
         <button type="button" id="toggleSenha" (click)="toggleSenha()">
           <span class="material-icons">
@@ -23,11 +81,21 @@
           </span>
         </button>
 
+        <div *ngIf="senha?.touched && senha?.invalid" class="invalid-feedback d-block">
+          <!-- trata as condições que foram estabelecidas para o input -->
+          <div *ngIf="senha?.errors?.['required']">A senha é obrigatorio</div>
+          <div *ngIf="senha?.errors?.['apenasEspacos']">A senha não pode ter apenas espaços</div>
+        </div>
+
       </div>
     </div>
+
     <button type="submit" class="btn btn-outline-success">Cadastrar</button>
-    <div class="alerta" *ngIf="mostrarMsg">
-      <p id="msgAlerta">{{msg}}</p>
+
+    <div *ngIf="mensagemSucesso" class="alert alert-success mt-3">
+      {{ mensagemSucesso }}
     </div>
+
+
   </div>
 </form> 

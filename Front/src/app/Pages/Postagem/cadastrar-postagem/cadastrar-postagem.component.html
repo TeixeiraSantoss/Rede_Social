@@ -10,7 +10,7 @@
     <div class="mb-3">
       <label for="titulo" class="form-label">Titulo</label>
 
-      <!-- [class.is-invalid]="titulo?.touched && titulo?.invalid" garante que o titulo so pode ser atribuido como invalida caso ja tenha tido uma primeira interação com o input -->
+      <!-- [class.is-invalid]="titulo?.touched && titulo?.invalid" permite trabalhar dinamicamente com a classe is-invalid do bootstrap conferme condição exigida -->
       <input type="text" 
       class="form-control" 
       id="inputTitulo"
@@ -55,5 +55,10 @@
       <span *ngIf="!isSubmitting">Postar</span>
       <span *ngIf="isSubmitting">Enviando...</span>
     </button>
+
+    <diV *ngIf="mensagemSucesso" class="alert alert-success mt-3">
+      {{ mensagemSucesso }}
+    </diV>
+
   </div>
 </form>  

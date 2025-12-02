@@ -15,8 +15,13 @@ export class CadastrarPostagemComponent {
 
   //Representa o formulario inteiro
   form!: FormGroup
+
+  //controlador de mensagens de sucesso
+  mensagemSucesso: string | null = null
+
   //flag para bloquear UI durante submissão
   isSubmitting = false
+
   //array para receber menssagens de erro do servidor
   //o array deve sempre conter apenas 1 menssagem de erro para evitar erro de logica no template
   serverErrors: string[] = []
@@ -80,12 +85,20 @@ export class CadastrarPostagemComponent {
       .subscribe({
         next: () =>{
           console.log("Postagem cadastrada com sucesso")
-          //Limpa Formulario
-          this.form.reset()
-          this.isSubmitting = false
 
-          //redireciona para o feed
-          this.router.navigate(["/feed"]);
+          this.mensagemSucesso = "Publicação cadastrada com sucesso"
+
+          setTimeout(() => {
+            this.mensagemSucesso = null
+            //Limpa Formulario
+            this.form.reset()
+            this.isSubmitting = false
+
+            //redireciona para o feed
+            this.router.navigate(["/feed"]);
+          }, 3000)
+
+          
         },
         error: (erro) =>{
           console.log(erro)
